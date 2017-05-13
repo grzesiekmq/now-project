@@ -1,5 +1,7 @@
-<div>Zjedz coś</div>
-<div>Inne kategorie: <a href="#/">wszystkie powiadomienia</a>, <a href="#/drive">samochodem</a></div>
-<div>Inne profile: <a href="#/buy">kupuj</a>
-    <a href="#/taxi">taxi</a></div>
-Najbliższe restauracje i bary Szukaj
+<div ng-controller="EatCtrl as ec">Zjedz coś
+    <div>Inne kategorie: <a href="#/">wszystkie powiadomienia</a>, <a href="#/drive">samochodem</a></div>
+    <div>Inne profile: <a href="#/buy">kupuj</a>
+        <a href="#/taxi">taxi</a></div>
+    Najbliższe restauracje i bary
+    <p ng-repeat="r in res">{{r.name}} <img ng-src='{{r.photos[0].getUrl({"maxWidth":100, "maxHeight":100})}}'></p>
+</div>

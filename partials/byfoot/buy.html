@@ -1,6 +1,9 @@
-<div>Kupuj</div>
+<div ng-controller="BuyCtrl as bc">Kupuj
 <div>Inne kategorie: <a href="#/">wszystkie powiadomienia</a>, <a href="#/drive">samochodem</a></div>
 <div>Inne profile: <a href="#/taxi">taxi</a>
     <a href="#/eat">zjedz coś</a></div>
 Najbliższe sklepy
-<br> Szukaj
+
+<p ng-repeat="r in res">{{r.name}}</p>
+
+</div>

@@ -1,5 +1,8 @@
-<div>Taxi</div>
+<div ng-controller="TaxiCtrl as tc">Taxi
 <div>Inne kategorie: <a href="#/">wszystkie powiadomienia</a>, <a href="#/drive">samochodem</a></div>
 <div>Inne profile: <a href="#/buy">kupuj</a>
     <a href="#/eat">zjedz coś</a></div>
-Najbliższa taksówka Szukaj
+Najbliższe postoje taksówek
+<p ng-repeat="r in res">{{r.name}}</p>
+Najbliższa taksówka
+</div>
