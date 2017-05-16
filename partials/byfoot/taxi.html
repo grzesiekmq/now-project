@@ -1,8 +1,45 @@
-<div ng-controller="TaxiCtrl as tc">Taxi
-<div>Inne kategorie: <a href="#/">wszystkie powiadomienia</a>, <a href="#/drive">samochodem</a></div>
-<div>Inne profile: <a href="#/buy">kupuj</a>
-    <a href="#/eat">zjedz coś</a></div>
-Najbliższe postoje taksówek
-<p ng-repeat="r in res">{{r.name}}</p>
-Najbliższa taksówka
+<div ng-controller="TaxiCtrl as tc">
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">Pieszo</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <a class="btn btn-primary btn-lg btn-block" href="#/" id="allOne">
+                            <div class="row"><span class="glyphicon glyphicon-home"></span></div>
+                            <div class="row"><span class="all">wszystkie</span></div>
+                            <div class="row"><span class="all">powiadomienia</span></div>
+                        </a>
+                    </div>
+                    <div class="col-xs-4">
+                        <a class="btn btn-default btn-lg btn-block" href="#/pieszo" role="button" id="btnfoot">
+                            <div class="row"><img src=".\img\byfoot.png" id="bfoot"></div>
+                            <div class="row"><span>pieszo</span></div>
+                        </a>
+                    </div>
+                    <div class="col-xs-4">
+                        <a class="btn btn-primary btn-lg btn-block" href="#/drive">
+                            <div class="row"><img src=".\img\drive.png" id="img-car"></div><span id="car">samochodem</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">Profile:</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-4"><a class="btn btn-warning btn-lg btn-block" href="#/buy">kupuj</a></div>
+                    <div class="col-xs-4"><a class="btn btn-success btn-lg btn-block" href="#/taxi">taxi</a></div>
+                    <div class="col-xs-4"><a class="btn btn-warning btn-lg btn-block" href="#/eat"><span id="eat-text">zjedz coś</span></a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Najbliższe postoje taksówek:</div>
+        <div class="panel-body">
+            <p ng-repeat="r in res">{{r.name}}</p>
+            Najbliższa taksówka
+        </div>
+    </div>
 </div>

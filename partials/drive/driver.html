@@ -1,7 +1,33 @@
-Samochodem
-<div>Inne kategorie: <a href="#/">wszystkie powiadomienia</a>, <a href="#/pieszo">pieszo</a>
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">Samochodem</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-4">
+                    <a class="btn btn-primary btn-lg btn-block" href="#/" id="allOne">
+                        <div class="row"><span class="glyphicon glyphicon-home"></span></div>
+                        <div class="row"><span class="all">wszystkie</span></div>
+                        <div class="row"><span class="all">powiadomienia</span></div>
+                    </a>
+                </div>
+                <div class="col-xs-4">
+                    <a class="btn btn-primary btn-lg btn-block" href="#/pieszo" role="button" id="btnfoot">
+                        <div class="row"><img src=".\img\byfoot.png" id="bfoot"></div>
+                        <div class="row"><span>pieszo</span></div>
+                    </a>
+                </div>
+                <div class="col-xs-4">
+                    <a class="btn btn-default btn-lg btn-block" href="#/drive">
+                        <div class="row"><img src=".\img\drive.png" id="img-car"></div><span id="car">samochodem</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Lista salonów samochodowych::</div>
+        <div class="panel-body">
+            <p ng-repeat="r in res">{{r.name}}</p>
+        </div>
+    </div>
+    <div>Lista samochodów w salonie</div>
 </div>
-<div>profil: kierowca</div>
-<div>Lista salonów samochodowych</div>
-<p ng-repeat="r in res">{{r.name}}</p>
-<div>Lista samochodów w salonie</div>
