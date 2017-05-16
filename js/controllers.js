@@ -1,7 +1,7 @@
 angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $window) {
     var nc = this;
 
-    $window.map = new google.maps.Map(document.getElementById('map'), {
+    $window.gmap = new google.maps.Map(document.getElementById('gmap'), {
         center: { lat: 50.0619625, lng: 19.9371255 },
         zoom: 18
     });
@@ -13,14 +13,14 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
     };
     var marker;
     // click
-    $window.map.addListener('click', function(event) {
+    $window.gmap.addListener('click', function(event) {
         // current location
         var loc = event.latLng;
         if (marker != undefined) {
             marker.setPosition(loc);
         } else {
 
-            marker = new google.maps.Marker({ position: loc, map: $window.map, icon: './img/navigation.png', draggable: true });
+            marker = new google.maps.Marker({ position: loc, map: $window.gmap, icon: './img/navigation.png', draggable: true });
         }
 
 
@@ -42,7 +42,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
             document.getElementById('detector').play();
             $scope.$emit('notify', notify);
 
-            var svc = new google.maps.places.PlacesService($window.map);
+            var svc = new google.maps.places.PlacesService($window.gmap);
             svc.nearbySearch({ location: loc, radius: 1000, types: ['grocery_or_supermarket', 'taxi_stand', 'food', 'car_dealer'] }, callback);
 
             function callback(results, status) {
@@ -61,7 +61,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 
             function createMarker(place) {
                 var placeLoc = place.geometry.location;
-                var marker = new google.maps.Marker({ map: $window.map, position: placeLoc });
+                var marker = new google.maps.Marker({ map: $window.gmap, position: placeLoc });
             }
         }, function(dismiss) {
             if (dismiss === 'cancel') {
@@ -76,14 +76,14 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 
 }).controller('BuyCtrl', function($http, $window, $scope) {
     var bc = this;
-    $window.map = new google.maps.Map(document.getElementById('map'), {
+    $window.gmap = new google.maps.Map(document.getElementById('gmap'), {
         center: { lat: 50.0619625, lng: 19.9371255 },
         zoom: 18
     });
     var marker;
 
     // click
-    $window.map.addListener('click', function(event) {
+    $window.gmap.addListener('click', function(event) {
         // current location
         var loc = event.latLng;
 
@@ -91,7 +91,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
             marker.setPosition(loc);
         } else {
 
-            marker = new google.maps.Marker({ position: loc, map: $window.map, icon: './img/navigation.png', draggable: true });
+            marker = new google.maps.Marker({ position: loc, map: $window.gmap, icon: './img/navigation.png', draggable: true });
         }
 
 
@@ -105,7 +105,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
             alert('Znaleziono wszystkie najbliższe miejsca');
 
 
-            svc = new $window.google.maps.places.PlacesService($window.map);
+            svc = new $window.google.maps.places.PlacesService($window.gmap);
             svc.nearbySearch({ location: loc, radius: 1000, types: ['grocery_or_supermarket'] }, callback);
 
             function callback(results, status) {
@@ -127,7 +127,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 
             function createMarker(place) {
                 var placeLoc = place.geometry.location;
-                var marker = new google.maps.Marker({ map: $window.map, position: placeLoc });
+                var marker = new google.maps.Marker({ map: $window.gmap, position: placeLoc });
             }
         } else { ''; }
 
@@ -139,38 +139,155 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 
 
 
-}).controller('TaxiCtrl', function($http, $scope, $window) {
+}).controller('TaxiCtrl', function($http, $scope, $window, PubNub, $rootScope) {
     var tc = this;
-    $window.map = new google.maps.Map(document.getElementById('map'), {
+    $window.gmap = new google.maps.Map(document.getElementById('gmap'), {
         center: { lat: 50.0619625, lng: 19.9371255 },
         zoom: 18
     });
     var marker;
+
+
     // click
-    $window.map.addListener('click', function(event) {
-        // current location
+    $window.gmap.addListener('click', function(event) {
+        // current user location
         var loc = event.latLng;
+
         if (marker != undefined) {
             marker.setPosition(loc);
         } else {
 
-            marker = new google.maps.Marker({ position: loc, map: $window.map, icon: './img/navigation.png', draggable: true });
+            marker = new google.maps.Marker({ position: loc, map: $window.gmap, icon: './img/navigation.png', draggable: true });
         }
-
 
 
         console.log('pos:', loc.lat(), loc.lng());
 
         var c = confirm('Czy chcesz wyszukać najbliższe miejsca?');
         if (c) {
-            document.getElementById('detector').play();
+            var placeLoc;
+            var taxiPos;
+
+            var startPos = [50.06755, 19.94273];
+            var speed = 50; // km/h
+
+            var delay = 100;
+            // document.getElementById('detector').play();
 
             alert('Znaleziono wszystkie najbliższe miejsca');
 
 
+            function animateMarker(marker, coords, km_h) {
+                var target = 0;
+                var km_h = km_h || 50;
+                coords.push([startPos[0], startPos[1]]);
 
-            var svc = new google.maps.places.PlacesService($window.map);
+                function goToPoint() {
+                    var lat = marker.position.lat();
+                    var lng = marker.position.lng();
+                    var step = (km_h * 1000 * delay) / 3600000; // in meters
+
+                    var dest = new google.maps.LatLng(
+                        coords[target][0], coords[target][1]);
+
+                    var distance =
+                        google.maps.geometry.spherical.computeDistanceBetween(
+                            dest, marker.position); // in meters
+
+                    var numStep = distance / step;
+                    var i = 0;
+                    var deltaLat = (coords[target][0] - lat) / numStep;
+                    var deltaLng = (coords[target][1] - lng) / numStep;
+
+
+                    if (!$rootScope.initialized) {
+
+                        PubNub.init({
+                            subscribe_key: 'sub-c-1ed69e9a-3748-11e7-9361-0619f8945a4f',
+                            publish_key: 'pub-c-b7d1fd4a-2c18-4da4-98d3-989af3e6e5da'
+
+
+                        });
+                        $rootScope.initialized = true;
+                    }
+                    PubNub.ngSubscribe({ channel: 'Channel-taxi' });
+
+                    $scope.publish = setInterval(function() {
+                        PubNub.ngPublish({
+                            channel: 'Channel-taxi',
+                            message: { latlng: [lat, lng] }
+                        });
+                    }, 1000);
+
+                    $rootScope.$on(PubNub.ngMsgEv('Channel-taxi'), function(ngEvent, payload) {
+                        $scope.$apply(function() {
+                            taxiPos = new google.maps.LatLng(payload.message.latlng[0], payload.message.latlng[1]);
+                            console.log(taxiPos.lat(), taxiPos.lng());
+                            var svcDM = new google.maps.DistanceMatrixService;
+
+                            svcDM.getDistanceMatrix({
+                                origins: [loc],
+                                destinations: [taxiPos],
+                                travelMode: 'WALKING',
+                                unitSystem: google.maps.UnitSystem.METRIC
+                            }, function(response) {
+                                $scope.nearTaxi = response.destinationAddresses["0"];
+                                $scope.dist = 'dystans: ' + response.rows["0"].elements["0"].distance.text + ' ' + response.rows[0].elements[0].distance.value + 'm (' + response.rows["0"].elements["0"].duration.text + ')';
+                                $scope.$apply();
+                                console.log(response);
+                                // taxi.setPosition(taxiPos);
+                            });
+                        });
+                    });
+
+
+
+
+
+                    function moveMarker() {
+                        lat += deltaLat;
+                        lng += deltaLng;
+                        i += step;
+
+                        if (i < distance) {
+                            marker.setPosition(new google.maps.LatLng(lat, lng));
+                            setTimeout(moveMarker, delay);
+
+
+
+                        } else {
+                            marker.setPosition(dest);
+                            target++;
+                            if (target == coords.length) {
+                                target = 0;
+                            }
+
+                            setTimeout(goToPoint, delay);
+                        }
+                    }
+                    moveMarker();
+                }
+                goToPoint();
+            }
+
+
+
+
+
+
+
+
+
+
+
+            var taxi = new google.maps.Marker({ position: new google.maps.LatLng(startPos[0], startPos[1]), map: $window.gmap, icon: './img/taxicon.png' });
+            var svc = new google.maps.places.PlacesService($window.gmap);
             svc.nearbySearch({ location: loc, radius: 1000, types: ['taxi_stand'] }, callback);
+
+            var tLat = taxi.position.lat();
+            var tLng = taxi.position.lng();
+
+
 
             function callback(results, status) {
                 if (status === google.maps.places.PlacesServiceStatus.OK) {
@@ -184,33 +301,86 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
                         createMarker(results[i]);
                     }
 
-                }
+
+
+                } else { ''; }
             }
+
 
             function createMarker(place) {
-                var placeLoc = place.geometry.location;
-                var marker = new google.maps.Marker({ map: $window.map, position: placeLoc });
-            }
-        } else { ''; }
+                placeLoc = place.geometry.location;
 
+                // taxi stand markers
+                var marker = new google.maps.Marker({ map: $window.gmap, position: placeLoc });
+
+            }
+
+            google.maps.event.addListenerOnce($window.gmap, 'idle', function() {
+                animateMarker(taxi, [
+                    [
+                        50.06755,
+                        19.94273
+                    ],
+
+                    [50.06884,
+                        19.93824
+                    ],
+
+                    [50.06712,
+                        19.9388
+                    ]
+
+
+
+
+                ], speed);
+            });
+
+
+
+
+
+
+            console.log('t lat', taxi.position.lat());
+            console.log('t lng', taxi.position.lng());
+
+
+
+            var directionsDisplay = new google.maps.DirectionsRenderer();
+            directionsDisplay.setMap($window.gmap);
+
+            var svcDi = new google.maps.DirectionsService;
+
+            svcDi.route({
+                    origin: loc,
+                    destination: { lat: 50.06591539999999, lng: 19.939136899999994 },
+                    travelMode: 'WALKING'
+                },
+                function(result) {
+                    directionsDisplay.setDirections(result);
+
+                    console.log(result);
+                });
+
+        }
     });
 
 }).controller('EatCtrl', function($http, $scope, $window) {
     var ec = this;
-    $window.map = new google.maps.Map(document.getElementById('map'), {
+    $window.gmap = new google.maps.Map(document.getElementById('gmap'), {
         center: { lat: 50.0619625, lng: 19.9371255 },
         zoom: 18
     });
     var marker;
     // click
-    $window.map.addListener('click', function(event) {
+    $window.gmap.addListener('click', function(event) {
         // current location
         var loc = event.latLng;
         if (marker != undefined) {
             marker.setPosition(loc);
         } else {
 
-            marker = new google.maps.Marker({ position: loc, map: $window.map, icon: './img/navigation.png', draggable: true });
+            marker = new google.maps.Marker({ position: loc, map: $window.gmap, icon: './img/navigation.png', draggable: true });
         }
 
 
@@ -224,7 +394,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
             alert('Znaleziono wszystkie najbliższe miejsca');
 
 
-            var svc = new google.maps.places.PlacesService($window.map);
+            var svc = new google.maps.places.PlacesService($window.gmap);
             svc.nearbySearch({ location: loc, radius: 1000, types: ['bar'] }, callback);
 
             function callback(results, status) {
@@ -244,34 +414,34 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 
             function createMarker(place) {
                 var placeLoc = place.geometry.location;
-                var marker = new google.maps.Marker({ map: $window.map, position: placeLoc });
+                var marker = new google.maps.Marker({ map: $window.gmap, position: placeLoc });
             }
         } else { ''; }
 
     });
 
 }).controller('ByFootCtrl', function($window) {
-    $window.map = new google.maps.Map(document.getElementById('map'), {
+    $window.gmap = new google.maps.Map(document.getElementById('gmap'), {
         center: { lat: 50.0619625, lng: 19.9371255 },
         zoom: 18
     });
 
 }).controller('DriveCtrl', function($http, $scope, $window) {
     var dc = this;
-    $window.map = new google.maps.Map(document.getElementById('map'), {
+    $window.gmap = new google.maps.Map(document.getElementById('gmap'), {
         center: { lat: 50.0619625, lng: 19.9371255 },
         zoom: 18
     });
     var marker;
     // click
-    $window.map.addListener('click', function(event) {
+    $window.gmap.addListener('click', function(event) {
         // current location
         var loc = event.latLng;
         if (marker != undefined) {
             marker.setPosition(loc);
         } else {
 
-            marker = new google.maps.Marker({ position: loc, map: $window.map, icon: './img/navigation.png', draggable: true });
+            marker = new google.maps.Marker({ position: loc, map: $window.gmap, icon: './img/navigation.png', draggable: true });
         }
 
 
@@ -283,7 +453,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 
             infowindow = new google.maps.InfoWindow();
 
-            var svc = new google.maps.places.PlacesService($window.map);
+            var svc = new google.maps.places.PlacesService($window.gmap);
             svc.nearbySearch({ location: loc, radius: 1000, types: ['car_dealer'] }, callback);
 
             function callback(results, status) {
@@ -301,7 +471,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 
             function createMarker(place) {
                 var placeLoc = place.geometry.location;
-                var marker = new google.maps.Marker({ map: $window.map, position: placeLoc });
+                var marker = new google.maps.Marker({ map: $window.gmap, position: placeLoc });
             }
         } else { ''; }
 

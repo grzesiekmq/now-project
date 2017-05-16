@@ -1,4 +1,4 @@
-angular.module('nowApp', ['ngRoute', 'angularNotify', 'oitozero.ngSweetAlert', '19degrees.ngSweetAlert2', 'nowCtrls']).config(['$routeProvider', function($routeProvider) {
+angular.module('nowApp', ['ngRoute', 'angularNotify', 'oitozero.ngSweetAlert', '19degrees.ngSweetAlert2', 'pubnub.angular.service', 'nowCtrls']).config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/', {
         templateUrl: 'partials/main.html',
         controller: 'NowCtrl'
