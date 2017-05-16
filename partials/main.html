@@ -1,6 +1,6 @@
 <header>
     <!-- logo -->
-    <!-- <img src=".\img\geo.bmp" class="img-responsive" id="geo"> -->
+ <img src=".\img\logo.png" class="center-block img-responsive " id="logo-now!"> 
 </header>
 <div class="container">
     <h4 id="topic">Aplikacja wykonująca czynności na podstawie geolokalizacji</h4>
@@ -19,5 +19,9 @@
         </p>
     </div>
 </div>
-<div>Lista miejsc z wszystkich profili</div>
-<p ng-repeat="r in res">{{r.name}}</p>
+<div class="panel panel-default">
+  <div class="panel-heading">Lista miejsc z wszystkich profili</div>
+  <div class="panel-body"><p ng-repeat="r in res">{{r.name}}</p></div>
+</div>
+
+
