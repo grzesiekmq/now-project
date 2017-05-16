@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="nowApp">
 
+
     <head>
         <meta charset="utf-8">
         <title>now!</title>
@@ -9,6 +10,9 @@
         <link rel="stylesheet" type="text/css" href="https://rawgit.com/limonte/sweetalert2/master/dist/sweetalert2.min.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="https://rawgit.com/cheiron1990/angular-notify/master/styles/css/angular-notify-material.min.css">
+        <script type="text/javascript" src="//pubnub.github.io/eon/v/eon/1.0.0/eon.js"></script>
+        <link type="text/css" rel="stylesheet" href="//pubnub.github.io/eon/v/eon/1.0.0/eon.css" />
+
         <!-- Bootstrap core CSS + modern style -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <!-- Optional theme -->
@@ -16,7 +20,11 @@
         <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         <!-- Latest compiled and min JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script src="http://cdn.pubnub.com/pubnub.min.js"></script>
+      
         <script src="https://code.angularjs.org/1.5.5/angular.js"></script>
+        <script src="https://rawgit.com/pubnub/angular-js/master/dist/scripts/pubnub-angular.js"></script>
+    
         <script src="https://rawgit.com/oitozero/ngSweetAlert/master/SweetAlert.min.js"></script>
         <script src="https://rawgit.com/bbiHQ/ngSweetAlert2/master/SweetAlert.js"></script>
         <script src="https://rawgit.com/t4t5/sweetalert/master/dist/sweetalert.min.js"></script>
@@ -44,8 +52,9 @@
         <footer>&copy; Copyright by GF & PD
             <div class="container">Stworzone w AngularJS v 1.5.5</div>
         </footer>
-        <audio id="detector" src="metal_detector.mp3"></audio>
+<!--         <audio id="detector" src="metal_detector.mp3"></audio> -->
         <audio id="pop" src="fbpop.mp3"></audio>
     </body>
+
 
 </html>
