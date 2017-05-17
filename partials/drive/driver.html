@@ -32,8 +32,22 @@
                         <td>{{r.name}}</td>
                     </tr>
                 </tbody>
-            </table> 
+            </table>
         </div>
     </div>
-    <div>Lista samochodów w salonie</div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Lista samochodów w salonie</div>
+        <div class="panel-body">
+            <table class="table table-striped table-hover">
+                <tbody>
+                    <tr ng-repeat="car in cars">
+                        <td>{{car}}</td>
+                        <!-- <td ng-repeat="img in imgs">
+                            <img ng-src="{{img}}">
+                        </td> -->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>

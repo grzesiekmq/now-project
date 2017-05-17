@@ -1,7 +1,7 @@
 angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $window) {
     var nc = this;
 
-    $window.gmap = new google.maps.Map(document.getElementById('gmap'), {
+    $window.gmap = new google.maps.Map(document.getElementById('map'), {
         center: { lat: 50.0619625, lng: 19.9371255 },
         zoom: 18
     });
@@ -39,7 +39,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
             showLoaderOnConfirm: true
         }).then(function() {
 
-            document.getElementById('detector').play();
+            // document.getElementById('detector').play();
             $scope.$emit('notify', notify);
 
             var svc = new google.maps.places.PlacesService($window.gmap);
@@ -76,10 +76,16 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 
 }).controller('BuyCtrl', function($http, $window, $scope) {
     var bc = this;
-    $window.gmap = new google.maps.Map(document.getElementById('gmap'), {
+    $window.gmap = new google.maps.Map(document.getElementById('map'), {
         center: { lat: 50.0619625, lng: 19.9371255 },
         zoom: 18
     });
+    var notify = {
+        type: 'info',
+        title: 'now! wszystkie miejsca',
+        content: 'Znaleziono wszystkie najbliższe miejsca',
+        timeout: 10000 //time in ms
+    };
     var marker;
 
     // click
@@ -98,11 +104,20 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 
         console.log('pos:', loc.lat(), loc.lng());
 
-        var c = confirm('Czy chcesz wyszukać najbliższe miejsca?');
-        if (c) {
-            document.getElementById('detector').play();
+        swal({
+            title: "najbliższe miejsca",
+            text: "Czy chcesz wyszukać najbliższe miejsca?",
+            imageUrl: "https://cdn2.iconfinder.com/data/icons/color-svg-vector-icons-2/512/help_support_question_mark-256.png",
+            showCancelButton: true,
+            confirmButtonColor: "#00ff9f",
+            cancelButtonColor: 'orangered',
+            confirmButtonText: "Tak",
+            cancelButtonText: "Nie",
+            showLoaderOnConfirm: true
+        }).then(function() {
+            // document.getElementById('detector').play();
+            $scope.$emit('notify', notify);
 
-            alert('Znaleziono wszystkie najbliższe miejsca');
 
 
             svc = new $window.google.maps.places.PlacesService($window.gmap);
@@ -129,8 +144,9 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
                 var placeLoc = place.geometry.location;
                 var marker = new google.maps.Marker({ map: $window.gmap, position: placeLoc });
             }
-        } else { ''; }
-
+        }, function(dismiss) {
+            if (dismiss === 'cancel') { ''; }
+        });
     });
 
 
@@ -141,10 +157,16 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 
 }).controller('TaxiCtrl', function($http, $scope, $window, PubNub, $rootScope) {
     var tc = this;
-    $window.gmap = new google.maps.Map(document.getElementById('gmap'), {
+    $window.gmap = new google.maps.Map(document.getElementById('map'), {
         center: { lat: 50.0619625, lng: 19.9371255 },
         zoom: 18
     });
+    var notify = {
+        type: 'info',
+        title: 'now! wszystkie miejsca',
+        content: 'Znaleziono wszystkie najbliższe miejsca',
+        timeout: 10000 //time in ms
+    };
     var marker;
 
 
@@ -163,8 +185,18 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 
         console.log('pos:', loc.lat(), loc.lng());
 
-        var c = confirm('Czy chcesz wyszukać najbliższe miejsca?');
-        if (c) {
+
+        swal({
+            title: "najbliższe miejsca",
+            text: "Czy chcesz wyszukać najbliższe miejsca?",
+            imageUrl: "https://cdn2.iconfinder.com/data/icons/color-svg-vector-icons-2/512/help_support_question_mark-256.png",
+            showCancelButton: true,
+            confirmButtonColor: "#00ff9f",
+            cancelButtonColor: 'orangered',
+            confirmButtonText: "Tak",
+            cancelButtonText: "Nie",
+            showLoaderOnConfirm: true
+        }).then(function() {
             var placeLoc;
             var taxiPos;
 
@@ -173,8 +205,8 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 
             var delay = 100;
             // document.getElementById('detector').play();
+            $scope.$emit('notify', notify);
 
-            alert('Znaleziono wszystkie najbliższe miejsca');
 
 
             function animateMarker(marker, coords, km_h) {
@@ -232,7 +264,8 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
                                 unitSystem: google.maps.UnitSystem.METRIC
                             }, function(response) {
                                 $scope.nearTaxi = response.destinationAddresses["0"];
-                                $scope.dist = 'dystans: ' + response.rows["0"].elements["0"].distance.text + ' ' + response.rows[0].elements[0].distance.value + 'm (' + response.rows["0"].elements["0"].duration.text + ')';
+                                $scope.dist = 'dystans: ' + response.rows["0"].elements["0"].distance.text + ' ' + response.rows[0].elements[0].distance.value + 'm';
+                                $scope.distVal = '(' + response.rows["0"].elements["0"].duration.text + ')';
                                 $scope.$apply();
                                 console.log(response);
                                 // taxi.setPosition(taxiPos);
@@ -362,15 +395,26 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
                     console.log(result);
                 });
 
-        }
+
+        }, function(dismiss) {
+            if (dismiss === 'cancel') {
+                '';
+            }
+        });
     });
 
 }).controller('EatCtrl', function($http, $scope, $window) {
     var ec = this;
-    $window.gmap = new google.maps.Map(document.getElementById('gmap'), {
+    $window.gmap = new google.maps.Map(document.getElementById('map'), {
         center: { lat: 50.0619625, lng: 19.9371255 },
         zoom: 18
     });
+    var notify = {
+        type: 'info',
+        title: 'now! wszystkie miejsca',
+        content: 'Znaleziono wszystkie najbliższe miejsca',
+        timeout: 10000 //time in ms
+    };
     var marker;
     // click
     $window.gmap.addListener('click', function(event) {
@@ -387,11 +431,21 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 
         console.log('pos:', loc.lat(), loc.lng());
 
-        var c = confirm('Czy chcesz wyszukać najbliższe miejsca?');
-        if (c) {
-            document.getElementById('detector').play();
 
-            alert('Znaleziono wszystkie najbliższe miejsca');
+        swal({
+            title: "najbliższe miejsca",
+            text: "Czy chcesz wyszukać najbliższe miejsca?",
+            imageUrl: "https://cdn2.iconfinder.com/data/icons/color-svg-vector-icons-2/512/help_support_question_mark-256.png",
+            showCancelButton: true,
+            confirmButtonColor: "#00ff9f",
+            cancelButtonColor: 'orangered',
+            confirmButtonText: "Tak",
+            cancelButtonText: "Nie",
+            showLoaderOnConfirm: true
+        }).then(function() {
+            // document.getElementById('detector').play();
+            $scope.$emit('notify', notify);
+
 
 
             var svc = new google.maps.places.PlacesService($window.gmap);
@@ -416,22 +470,30 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
                 var placeLoc = place.geometry.location;
                 var marker = new google.maps.Marker({ map: $window.gmap, position: placeLoc });
             }
-        } else { ''; }
+        }, function(dismiss) {
+            if (dismiss === 'cancel') { ''; }
+        });
 
     });
 
 }).controller('ByFootCtrl', function($window) {
-    $window.gmap = new google.maps.Map(document.getElementById('gmap'), {
+    $window.gmap = new google.maps.Map(document.getElementById('map'), {
         center: { lat: 50.0619625, lng: 19.9371255 },
         zoom: 18
     });
 
 }).controller('DriveCtrl', function($http, $scope, $window) {
     var dc = this;
-    $window.gmap = new google.maps.Map(document.getElementById('gmap'), {
-        center: { lat: 50.0619625, lng: 19.9371255 },
+    $window.gmap = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: 50.04822, lng: 19.96863 },
         zoom: 18
     });
+    var notify = {
+        type: 'info',
+        title: 'now! wszystkie miejsca',
+        content: 'Znaleziono wszystkie najbliższe miejsca',
+        timeout: 10000 //time in ms
+    };
     var marker;
     // click
     $window.gmap.addListener('click', function(event) {
@@ -441,17 +503,26 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
             marker.setPosition(loc);
         } else {
 
-            marker = new google.maps.Marker({ position: loc, map: $window.gmap, icon: './img/navigation.png', draggable: true });
+            marker = new google.maps.Marker({ position: loc, map: $window.gmap, icon: './img/ferrari.png', draggable: true });
         }
 
 
 
         console.log('pos:', loc.lat(), loc.lng());
 
-        var c = confirm('Czy chcesz wyszukać najbliższe miejsca?');
-        if (c) {
 
-            infowindow = new google.maps.InfoWindow();
+        swal({
+            title: "najbliższe miejsca",
+            text: "Czy chcesz wyszukać najbliższe miejsca?",
+            imageUrl: "https://cdn2.iconfinder.com/data/icons/color-svg-vector-icons-2/512/help_support_question_mark-256.png",
+            showCancelButton: true,
+            confirmButtonColor: "#00ff9f",
+            cancelButtonColor: 'orangered',
+            confirmButtonText: "Tak",
+            cancelButtonText: "Nie",
+            showLoaderOnConfirm: true
+        }).then(function() {
+            $scope.$emit('notify', notify);
 
             var svc = new google.maps.places.PlacesService($window.gmap);
             svc.nearbySearch({ location: loc, radius: 1000, types: ['car_dealer'] }, callback);
@@ -473,7 +544,18 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
                 var placeLoc = place.geometry.location;
                 var marker = new google.maps.Marker({ map: $window.gmap, position: placeLoc });
             }
-        } else { ''; }
+            $http.get('cars.json').then(function(response) {
+                $scope.cars = response.data.cars;
+
+
+
+            });
+            // $http.get('imgs.json').then(function(response) {
+            // $scope.imgs = response.data.imgs;
+            // });
+        }, function(dismiss) {
+            if (dismiss === 'cancel') { ''; }
+        });
 
     });
 
