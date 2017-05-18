@@ -126,7 +126,9 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
             function callback(results, status) {
                 if (status === google.maps.places.PlacesServiceStatus.OK) {
                     console.log('length', results.length);
-                    console.log(results["0"].name);
+                    //console.log(results["0"].name);
+					console.log(results);
+
                     $scope.res = results;
                     $scope.$apply();
 
