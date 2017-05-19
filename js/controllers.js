@@ -98,6 +98,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
         } else {
 
             marker = new google.maps.Marker({ position: loc, map: $window.gmap, icon: './img/navigation.png', draggable: true });
+			
         }
 
 
@@ -266,8 +267,13 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
                                 unitSystem: google.maps.UnitSystem.METRIC
                             }, function(response) {
                                 $scope.nearTaxi = response.destinationAddresses["0"];
-                                $scope.dist = 'dystans: ' + response.rows["0"].elements["0"].distance.text + ' ' + response.rows[0].elements[0].distance.value + 'm';
-                                $scope.distVal = '(' + response.rows["0"].elements["0"].duration.text + ')';
+								if (response.rows[0].elements[0].distance.value > 999){
+									$scope.dist = response.rows["0"].elements["0"].distance.text;
+								}else{
+									$scope.dist = response.rows[0].elements[0].distance.value + 'm';
+								}
+                                //$scope.dist =response.rows["0"].elements["0"].distance.text + ' ' + response.rows[0].elements[0].distance.value + 'm';
+                                $scope.distVal =response.rows["0"].elements["0"].duration.text;
                                 $scope.$apply();
                                 console.log(response);
                                 // taxi.setPosition(taxiPos);
