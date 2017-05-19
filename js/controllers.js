@@ -82,7 +82,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
     });
     var notify = {
         type: 'info',
-        title: 'now! wszystkie miejsca',
+        title: 'now! najbliższe sklepy',
         content: 'Znaleziono wszystkie najbliższe miejsca',
         timeout: 10000 //time in ms
     };
@@ -163,7 +163,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
     });
     var notify = {
         type: 'info',
-        title: 'now! wszystkie miejsca',
+        title: 'now! postoje taxi',
         content: 'Znaleziono wszystkie najbliższe miejsca',
         timeout: 10000 //time in ms
     };
@@ -411,7 +411,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
     });
     var notify = {
         type: 'info',
-        title: 'now! wszystkie miejsca',
+        title: 'now! restauracje i bary',
         content: 'Znaleziono wszystkie najbliższe miejsca',
         timeout: 10000 //time in ms
     };
@@ -482,7 +482,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
         zoom: 18
     });
 
-}).controller('DriveCtrl', function($http, $scope, $window) {
+}).controller('DriveCtrl', function($http, $scope, $window, $rootScope) {
     var dc = this;
     $window.gmap = new google.maps.Map(document.getElementById('map'), {
         center: { lat: 50.04822, lng: 19.96863 },
@@ -490,11 +490,62 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
     });
     var notify = {
         type: 'info',
-        title: 'now! wszystkie miejsca',
+        title: 'now! salony samochodowe',
         content: 'Znaleziono wszystkie najbliższe miejsca',
         timeout: 10000 //time in ms
     };
     var marker;
+    var btnLoad = document.getElementById('load');
+    var btnDel = document.getElementById('del');
+    btnLoad.addEventListener('click', function() {
+        var car = localStorage.getItem('car');
+
+        if (car) {
+            $rootScope.carItem = JSON.parse(car);
+            console.log($rootScope.carItem);
+        } else {
+
+            swal({
+                title: 'brak samochodów na liście!',
+                text: 'Określ aktualną lokalizację na mapie, lista zapisze się automatycznie :) dopiero później możesz wczytać',
+                type: 'warning'
+            });
+        }
+
+
+    }, function() { console.log('error'); });
+
+    btnDel.addEventListener('click', function() {
+        if (car) {
+            swal({
+                title: "Lista samochodów",
+                text: "Czy napewno chcesz usunąć?",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: "#00ff9f",
+                cancelButtonColor: 'orangered',
+                confirmButtonText: "Tak",
+                cancelButtonText: "Nie",
+                showLoaderOnConfirm: true
+            }).then(function() {
+                localStorage.clear();
+                swal({
+                    title: 'Usunięto listę',
+                    type: 'success',
+                    showConfirmButton: false
+                });
+                location.reload();
+
+            }, function(dismiss) {
+                if (dismiss === 'cancel') { ''; }
+            });
+        } else { ''; }
+    });
+
+
+
+
+
     // click
     $window.gmap.addListener('click', function(event) {
         // current location
@@ -546,17 +597,39 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
             }
             $http.get('cars.json').then(function(response) {
                 $scope.cars = response.data.cars;
+                console.log($scope.cars);
+                var arr = [];
+                for (var i = 0; i < $scope.cars.length; i++) {
+                    var name = $scope.cars[i].name;
+                    console.log(name);
+                    arr.push(name);
+
+                }
+                console.log(arr);
+                if (typeof(Storage) !== "undefined") {
+
+                    localStorage.setItem('car', JSON.stringify(arr));
+                }
+
+
+
 
 
 
             });
-            // $http.get('imgs.json').then(function(response) {
-            // $scope.imgs = response.data.imgs;
-            // });
+
+
         }, function(dismiss) {
             if (dismiss === 'cancel') { ''; }
         });
 
     });
+
+
+
+
+
+
+
 
 });

@@ -24,7 +24,7 @@
         </div>
     </div>
     <div class="panel panel-default">
-        <div class="panel-heading">Lista salonów samochodowych::</div>
+        <div class="panel-heading">Lista salonów samochodowych:</div>
         <div class="panel-body">
             <table class="table table-striped table-hover ">
                 <tbody>
@@ -38,16 +38,16 @@
     <div class="panel panel-default">
         <div class="panel-heading">Lista samochodów w salonie</div>
         <div class="panel-body">
-            <table class="table table-striped table-hover">
-                <tbody>
-                    <tr ng-repeat="car in cars">
-                        <td>{{car}}</td>
-                        <!-- <td ng-repeat="img in imgs">
-                            <img ng-src="{{img}}">
-                        </td> -->
-                    </tr>
-                </tbody>
-            </table>
+            <a href="#/list" class="btn btn-primary" id="load"><h4>Wczytaj listę</h4></a>
+            <p></p>
+            <a class="btn btn-primary" id="del"><h4>Usuń listę</h4></a>
+            <div class="row" ng-repeat="car in cars">
+                <div class="col-xs-6"><img class="img-responsive" ng-src="{{car.img}}"></div>
+                <hr class="hr-custom">
+                <div class="col-xs-6">
+                    <h4 class="names">{{car.name}}</h4>
+                </div>
+            </div>
         </div>
     </div>
 </div>

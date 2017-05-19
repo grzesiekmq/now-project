@@ -34,34 +34,75 @@ p {
 }
 
 .glyphicon.glyphicon-home {
-    font-size: 3.5em
+    font-size: 3em
 }
 
 .all {
-    font-size: 57%
+    font-size: 57%;
+    margin-left: -15%;
 }
 
-#allOne {
-    height: 8.5em
+.btn-primary,
+.btn-default {
+    box-shadow: 0 10px #999;
+    height: 8em;
+}
+
+.btn-warning {
+    box-shadow: 0 10px
+}
+
+.btn-primary:active,
+.btn-warning:active {
+    transform: translateY(5px);
+    box-shadow: 0 5px #5cb85c;
+}
+
+.btn-default:active {
+    background-color: #5cb85c !important;
+}
+
+.hr-custom {
+    border-color: #df691a;
+    margin-top: 0
 }
 
 #bfoot {
     width: 4em;
-    height: 6em
+    height: 6em;
+    margin-left: -14%;
 }
 
 #car {
     font-size: 57%;
-    margin-left: -25%
+    margin-left: -60%
+}
+
+#load {
+    position: relative;
+    bottom: 1em;
+}
+
+#del {
+    background-color: red;
+    position: relative;
+    bottom: 0.7em;
+    height: 5em;
+}
+
+.buy-text {
+    margin-left: -0.6em;
 }
 
 #eat-text {
-    margin-left: -27%;
+    margin-left: -22px;
+    font-size: medium;
 }
 
 #img-car {
     width: 4em;
-    height: 6em
+    height: 6em;
+    margin-left: -12%
 }
 
 #geo {
