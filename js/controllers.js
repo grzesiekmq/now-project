@@ -39,7 +39,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
             showLoaderOnConfirm: true
         }).then(function() {
 
-            // document.getElementById('detector').play();
+            document.getElementById('detector').play();
             $scope.$emit('notify', notify);
 
             var svc = new google.maps.places.PlacesService($window.gmap);
@@ -98,7 +98,6 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
         } else {
 
             marker = new google.maps.Marker({ position: loc, map: $window.gmap, icon: './img/navigation.png', draggable: true });
-			
         }
 
 
@@ -116,7 +115,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
             cancelButtonText: "Nie",
             showLoaderOnConfirm: true
         }).then(function() {
-            // document.getElementById('detector').play();
+            document.getElementById('detector').play();
             $scope.$emit('notify', notify);
 
 
@@ -127,9 +126,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
             function callback(results, status) {
                 if (status === google.maps.places.PlacesServiceStatus.OK) {
                     console.log('length', results.length);
-                    //console.log(results["0"].name);
-					console.log(results);
-
+                    console.log(results["0"].name);
                     $scope.res = results;
                     $scope.$apply();
 
@@ -207,7 +204,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
             var speed = 50; // km/h
 
             var delay = 100;
-            // document.getElementById('detector').play();
+            document.getElementById('detector').play();
             $scope.$emit('notify', notify);
 
 
@@ -239,7 +236,8 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 
                         PubNub.init({
                             subscribe_key: 'sub-c-1ed69e9a-3748-11e7-9361-0619f8945a4f',
-                            publish_key: 'pub-c-b7d1fd4a-2c18-4da4-98d3-989af3e6e5da'
+                            publish_key: 'pub-c-b7d1fd4a-2c18-4da4-98d3-989af3e6e5da',
+                            ssl: (('https:' == document.location.protocol) ? true : false)
 
 
                         });
@@ -267,13 +265,8 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
                                 unitSystem: google.maps.UnitSystem.METRIC
                             }, function(response) {
                                 $scope.nearTaxi = response.destinationAddresses["0"];
-								if (response.rows[0].elements[0].distance.value > 999){
-									$scope.dist = response.rows["0"].elements["0"].distance.text;
-								}else{
-									$scope.dist = response.rows[0].elements[0].distance.value + 'm';
-								}
-                                //$scope.dist =response.rows["0"].elements["0"].distance.text + ' ' + response.rows[0].elements[0].distance.value + 'm';
-                                $scope.distVal =response.rows["0"].elements["0"].duration.text;
+                                $scope.dist = 'dystans: ' + response.rows["0"].elements["0"].distance.text + ' ' + response.rows[0].elements[0].distance.value + 'm';
+                                $scope.distVal = '(' + response.rows["0"].elements["0"].duration.text + ')';
                                 $scope.$apply();
                                 console.log(response);
                                 // taxi.setPosition(taxiPos);
@@ -451,7 +444,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
             cancelButtonText: "Nie",
             showLoaderOnConfirm: true
         }).then(function() {
-            // document.getElementById('detector').play();
+            document.getElementById('detector').play();
             $scope.$emit('notify', notify);
 
 
