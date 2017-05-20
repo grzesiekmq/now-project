@@ -101,6 +101,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
         }
 
 
+        document.getElementById('pop').play();
 
         console.log('pos:', loc.lat(), loc.lng());
 
@@ -182,6 +183,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
             marker = new google.maps.Marker({ position: loc, map: $window.gmap, icon: './img/navigation.png', draggable: true });
         }
 
+        document.getElementById('pop').play();
 
         console.log('pos:', loc.lat(), loc.lng());
 
@@ -432,6 +434,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
         }
 
 
+        document.getElementById('pop').play();
 
         console.log('pos:', loc.lat(), loc.lng());
 
@@ -562,6 +565,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
         }
 
 
+        document.getElementById('pop').play();
 
         console.log('pos:', loc.lat(), loc.lng());
 
@@ -577,6 +581,8 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
             cancelButtonText: "Nie",
             showLoaderOnConfirm: true
         }).then(function() {
+            document.getElementById('detector').play();
+
             $scope.$emit('notify', notify);
 
             var svc = new google.maps.places.PlacesService($window.gmap);
