@@ -12,6 +12,8 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
         timeout: 10000 //time in ms
     };
     var marker;
+    var infowindow;
+    var activeWindow;
     // click
     $window.gmap.addListener('click', function(event) {
         // current location
@@ -53,15 +55,36 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 
                     for (var i = 0; i < results.length; i++) {
                         console.log(results[i]);
-                        createMarker(results[i]);
+
+                        createMarker(results[i], results[i].name, results[i].vicinity);
+
+
+
+
                     }
 
                 }
             }
 
-            function createMarker(place) {
+            function createMarker(place, name, v) {
                 var placeLoc = place.geometry.location;
                 var marker = new google.maps.Marker({ map: $window.gmap, position: placeLoc });
+                infowindow = new google.maps.InfoWindow();
+
+                infowindow.setContent(name + '<br>' + v);
+                marker.infowindow = infowindow;
+                marker.addListener('click', info());
+
+                function info() {
+
+                    return function() {
+                        if (activeWindow != undefined)
+                            activeWindow.close();
+                        this.infowindow.open(marker.get('map'), this);
+                        activeWindow = infowindow;
+                    };
+                }
+
             }
         }, function(dismiss) {
             if (dismiss === 'cancel') {
@@ -70,6 +93,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
         });
 
     });
+
 
 
 
@@ -87,6 +111,9 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
         timeout: 10000 //time in ms
     };
     var marker;
+    var infowindow;
+
+    var activeWindow;
 
     // click
     $window.gmap.addListener('click', function(event) {
@@ -135,15 +162,31 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 
 
 
-                        createMarker(results[i]);
+                        createMarker(results[i], results[i].name, results[i].vicinity);
                     }
 
                 }
             }
 
-            function createMarker(place) {
+            function createMarker(place, name, v) {
                 var placeLoc = place.geometry.location;
                 var marker = new google.maps.Marker({ map: $window.gmap, position: placeLoc });
+                infowindow = new google.maps.InfoWindow();
+
+                infowindow.setContent(name + '<br>' + v);
+                marker.infowindow = infowindow;
+                marker.addListener('click', info());
+
+                function info() {
+
+                    return function() {
+                        if (activeWindow != undefined)
+                            activeWindow.close();
+                        this.infowindow.open(marker.get('map'), this);
+                        activeWindow = infowindow;
+                    };
+                }
+
             }
         }, function(dismiss) {
             if (dismiss === 'cancel') { ''; }
@@ -169,6 +212,9 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
         timeout: 10000 //time in ms
     };
     var marker;
+    var infowindow;
+
+    var activeWindow;
 
 
     // click
@@ -337,7 +383,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 
                     for (var i = 0; i < results.length; i++) {
 
-                        createMarker(results[i]);
+                        createMarker(results[i], results[i].name, results[i].vicinity);
                     }
 
 
@@ -346,11 +392,24 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
             }
 
 
-            function createMarker(place) {
-                placeLoc = place.geometry.location;
-
-                // taxi stand markers
+            function createMarker(place, name, v) {
+                var placeLoc = place.geometry.location;
                 var marker = new google.maps.Marker({ map: $window.gmap, position: placeLoc });
+                infowindow = new google.maps.InfoWindow();
+
+                infowindow.setContent(name + '<br>' + v);
+                marker.infowindow = infowindow;
+                marker.addListener('click', info());
+
+                function info() {
+
+                    return function() {
+                        if (activeWindow != undefined)
+                            activeWindow.close();
+                        this.infowindow.open(marker.get('map'), this);
+                        activeWindow = infowindow;
+                    };
+                }
 
             }
 
@@ -422,6 +481,10 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
         timeout: 10000 //time in ms
     };
     var marker;
+    var infowindow;
+
+    var activeWindow;
+
     // click
     $window.gmap.addListener('click', function(event) {
         // current location
@@ -467,15 +530,31 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 
                     for (var i = 0; i < results.length; i++) {
                         console.log(results[i]);
-                        createMarker(results[i]);
+                        createMarker(results[i], results[i].name, results[i].vicinity);
                     }
 
                 }
             }
 
-            function createMarker(place) {
+            function createMarker(place, name, v) {
                 var placeLoc = place.geometry.location;
                 var marker = new google.maps.Marker({ map: $window.gmap, position: placeLoc });
+                infowindow = new google.maps.InfoWindow();
+
+                infowindow.setContent(name + '<br>' + v);
+                marker.infowindow = infowindow;
+                marker.addListener('click', info());
+
+                function info() {
+
+                    return function() {
+                        if (activeWindow != undefined)
+                            activeWindow.close();
+                        this.infowindow.open(marker.get('map'), this);
+                        activeWindow = infowindow;
+                    };
+                }
+
             }
         }, function(dismiss) {
             if (dismiss === 'cancel') { ''; }
@@ -502,6 +581,10 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
         timeout: 10000 //time in ms
     };
     var marker;
+    var infowindow;
+
+    var activeWindow;
+
     var btnLoad = document.getElementById('load');
     var btnDel = document.getElementById('del');
     btnLoad.addEventListener('click', function() {
@@ -595,15 +678,31 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
                     $scope.$apply();
                     for (var i = 0; i < results.length; i++) {
                         console.log(results[i]);
-                        createMarker(results[i]);
+                        createMarker(results[i], results[i].name, results[i].vicinity);
                     }
 
                 }
             }
 
-            function createMarker(place) {
+            function createMarker(place, name, v) {
                 var placeLoc = place.geometry.location;
                 var marker = new google.maps.Marker({ map: $window.gmap, position: placeLoc });
+                infowindow = new google.maps.InfoWindow();
+
+                infowindow.setContent(name + '<br>' + v);
+                marker.infowindow = infowindow;
+                marker.addListener('click', info());
+
+                function info() {
+
+                    return function() {
+                        if (activeWindow != undefined)
+                            activeWindow.close();
+                        this.infowindow.open(marker.get('map'), this);
+                        activeWindow = infowindow;
+                    };
+                }
+
             }
             $http.get('cars.json').then(function(response) {
                 $scope.cars = response.data.cars;

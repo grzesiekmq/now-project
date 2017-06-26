@@ -115,6 +115,12 @@ p {
     margin: auto;
 }
 
+.gm-style .gm-style-iw {
+    font-weight: bold;
+    font-size: 1.5em;
+    color: blue;
+}
+
 #drivetext {}
 
 #btnfoot,
