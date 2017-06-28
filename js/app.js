@@ -1,4 +1,4 @@
-angular.module('nowApp', ['ngRoute', 'angularNotify', 'oitozero.ngSweetAlert', '19degrees.ngSweetAlert2', 'pubnub.angular.service', 'nowCtrls']).config(['$routeProvider', function($routeProvider) {
+angular.module('nowApp', ['ngRoute', 'ngAnimate', 'angularNotify', 'oitozero.ngSweetAlert', '19degrees.ngSweetAlert2', 'pubnub.angular.service', 'nowCtrls']).config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/', {
         templateUrl: 'partials/main.html',
         controller: 'NowCtrl'
@@ -19,5 +19,8 @@ angular.module('nowApp', ['ngRoute', 'angularNotify', 'oitozero.ngSweetAlert', '
         templateUrl: 'partials/drive/driver.html',
         controller: 'DriveCtrl'
 
+    }).when('/list', {
+        templateUrl: 'partials/drive/carlist.html',
+        controller: 'DriveCtrl'
     }).otherwise({ redirectTo: '/' });
 }]);

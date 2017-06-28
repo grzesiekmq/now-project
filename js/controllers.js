@@ -12,6 +12,8 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
         timeout: 10000 //time in ms
     };
     var marker;
+    var infowindow;
+    var activeWindow;
     // click
     $window.gmap.addListener('click', function(event) {
         // current location
@@ -39,7 +41,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
             showLoaderOnConfirm: true
         }).then(function() {
 
-            // document.getElementById('detector').play();
+            document.getElementById('detector').play();
             $scope.$emit('notify', notify);
 
             var svc = new google.maps.places.PlacesService($window.gmap);
@@ -52,9 +54,19 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
                     var url=[];
 
                     for (var i = 0; i < results.length; i++) {
+
                         var new_name = results[i].name.replace(/ /g, "+");
 						url[i] = 'https://www.google.com/maps/place/' +  new_name + '/@' + results[i].geometry.location.toUrlValue() + ',' + 17 + 'z/';								
                         createMarker(results[i], url[i]);
+
+                        console.log(results[i]);
+
+                        // createMarker(results[i], results[i].name, results[i].vicinity);
+
+
+
+
+
                     }
 					$scope.url = url;
 					$scope.$apply();
@@ -62,11 +74,13 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
                 }
             }
 
+
             function createMarker(place, link) {
                 var placeLoc = place.geometry.location;
 				var placeName = place.name;
                 var marker = new google.maps.Marker({ map: $window.gmap, position: placeLoc,  title: placeName, url: link, });
 				google.maps.event.addListener(marker, 'click', function() {window.location.href = marker.url;});
+
             }
         }, function(dismiss) {
             if (dismiss === 'cancel') {
@@ -79,6 +93,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 
 
 
+
 }).controller('BuyCtrl', function($http, $window, $scope) {
     var bc = this;
     $window.gmap = new google.maps.Map(document.getElementById('map'), {
@@ -87,11 +102,14 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
     });
     var notify = {
         type: 'info',
-        title: 'now! wszystkie miejsca',
+        title: 'now! najbliższe sklepy',
         content: 'Znaleziono wszystkie najbliższe miejsca',
         timeout: 10000 //time in ms
     };
     var marker;
+    var infowindow;
+
+    var activeWindow;
 
     // click
     $window.gmap.addListener('click', function(event) {
@@ -103,10 +121,10 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
         } else {
 
             marker = new google.maps.Marker({ position: loc, map: $window.gmap, icon: './img/navigation.png', draggable: true });
-			
         }
 
 
+        document.getElementById('pop').play();
 
         console.log('pos:', loc.lat(), loc.lng());
 
@@ -121,7 +139,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
             cancelButtonText: "Nie",
             showLoaderOnConfirm: true
         }).then(function() {
-            // document.getElementById('detector').play();
+            document.getElementById('detector').play();
             $scope.$emit('notify', notify);
 
 
@@ -132,8 +150,12 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
             function callback(results, status) {
                 if (status === google.maps.places.PlacesServiceStatus.OK) {
                     console.log('length', results.length);
+
                     //console.log(results["0"]);
 					console.log(results);
+
+
+                    console.log(results["0"].name);
 
                     $scope.res = results;
             
@@ -141,12 +163,18 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 
                     for (var i = 0; i < results.length; i++) {
 
+
 						//console.log(i);
 						//console.log(results[i].name);
 						//console.log(results[i].geometry.location.toUrlValue());
 						var new_name = results[i].name.replace(/ /g, "+");
 						url[i] = 'https://www.google.com/maps/place/' +  new_name + '/@' + results[i].geometry.location.toUrlValue() + ',' + 17 + 'z/';									
                         createMarker(results[i], url[i]);
+
+
+
+                       // createMarker(results[i], results[i].name, results[i].vicinity);
+
                     }
 					$scope.url = url;
 					$scope.$apply();
@@ -156,11 +184,14 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
                 }
             }
 
+
              function createMarker(place, link) {
                 var placeLoc = place.geometry.location;
 				var placeName = place.name;
                 var marker = new google.maps.Marker({ map: $window.gmap, position: placeLoc,  title: placeName, url: link, });
 				google.maps.event.addListener(marker, 'click', function() {window.location.href = marker.url;});
+
+
 
             }
         }, function(dismiss) {
@@ -182,11 +213,14 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
     });
     var notify = {
         type: 'info',
-        title: 'now! wszystkie miejsca',
+        title: 'now! postoje taxi',
         content: 'Znaleziono wszystkie najbliższe miejsca',
         timeout: 10000 //time in ms
     };
     var marker;
+    var infowindow;
+
+    var activeWindow;
 
 
     // click
@@ -201,6 +235,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
             marker = new google.maps.Marker({ position: loc, map: $window.gmap, icon: './img/navigation.png', draggable: true });
         }
 
+        document.getElementById('pop').play();
 
         console.log('pos:', loc.lat(), loc.lng());
 
@@ -223,7 +258,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
             var speed = 50; // km/h
 
             var delay = 100;
-            // document.getElementById('detector').play();
+            document.getElementById('detector').play();
             $scope.$emit('notify', notify);
 
 
@@ -255,7 +290,8 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 
                         PubNub.init({
                             subscribe_key: 'sub-c-1ed69e9a-3748-11e7-9361-0619f8945a4f',
-                            publish_key: 'pub-c-b7d1fd4a-2c18-4da4-98d3-989af3e6e5da'
+                            publish_key: 'pub-c-b7d1fd4a-2c18-4da4-98d3-989af3e6e5da',
+                            ssl: (('https:' == document.location.protocol) ? true : false)
 
 
                         });
@@ -283,16 +319,14 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
                                 unitSystem: google.maps.UnitSystem.METRIC
                             }, function(response) {
                                 $scope.nearTaxi = response.destinationAddresses["0"];
-								if (response.rows[0].elements[0].distance.value > 999){
-									$scope.dist = response.rows["0"].elements["0"].distance.text;
-								}else{
-									$scope.dist = response.rows[0].elements[0].distance.value + 'm';
-								}
-                                //$scope.dist =response.rows["0"].elements["0"].distance.text + ' ' + response.rows[0].elements[0].distance.value + 'm';
-                                $scope.distVal =response.rows["0"].elements["0"].duration.text;
+                                if (response.rows[0].elements[0].distance.value > 999) {
+                                    $scope.dist = response.rows["0"].elements["0"].distance.text;
+                                } else {
+                                    $scope.dist = response.rows[0].elements[0].distance.value + 'm';
+                                }
+                                $scope.distVal = response.rows["0"].elements["0"].duration.text;
                                 $scope.$apply();
                                 console.log(response);
-                                // taxi.setPosition(taxiPos);
                             });
                         });
                     });
@@ -355,10 +389,15 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 					var url=[];
 
                     for (var i = 0; i < results.length; i++) {
+
 						
 						var new_name = results[i].name.replace(/ /g, "+");
 						url[i] = 'https://www.google.com/maps/place/' +  new_name + '/@' + results[i].geometry.location.toUrlValue() + ',' + 17 + 'z/';								
                         createMarker(results[i]);
+
+
+                       // createMarker(results[i], results[i].name, results[i].vicinity);
+
                     }
 					$scope.url = url;
 					$scope.$apply();
@@ -368,11 +407,24 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
             }
 
 
-            function createMarker(place) {
-                placeLoc = place.geometry.location;
-
-                // taxi stand markers
+            function createMarker(place, name, v) {
+                var placeLoc = place.geometry.location;
                 var marker = new google.maps.Marker({ map: $window.gmap, position: placeLoc });
+                infowindow = new google.maps.InfoWindow();
+
+                infowindow.setContent(name + '<br>' + v);
+                marker.infowindow = infowindow;
+                marker.addListener('click', info());
+
+                function info() {
+
+                    return function() {
+                        if (activeWindow != undefined)
+                            activeWindow.close();
+                        this.infowindow.open(marker.get('map'), this);
+                        activeWindow = infowindow;
+                    };
+                }
 
             }
 
@@ -439,11 +491,15 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
     });
     var notify = {
         type: 'info',
-        title: 'now! wszystkie miejsca',
+        title: 'now! restauracje i bary',
         content: 'Znaleziono wszystkie najbliższe miejsca',
         timeout: 10000 //time in ms
     };
     var marker;
+    var infowindow;
+
+    var activeWindow;
+
     // click
     $window.gmap.addListener('click', function(event) {
         // current location
@@ -456,6 +512,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
         }
 
 
+        document.getElementById('pop').play();
 
         console.log('pos:', loc.lat(), loc.lng());
 
@@ -471,7 +528,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
             cancelButtonText: "Nie",
             showLoaderOnConfirm: true
         }).then(function() {
-            // document.getElementById('detector').play();
+            document.getElementById('detector').play();
             $scope.$emit('notify', notify);
 
 
@@ -488,11 +545,16 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 					var url=[];
 
                     for (var i = 0; i < results.length; i++) {
+
 						
 						var new_name = results[i].name.replace(/ /g, "+");
 						url[i] = 'https://www.google.com/maps/place/' +  new_name + '/@' + results[i].geometry.location.toUrlValue() + ',' + 17 + 'z/';								
                         createMarker(results[i], url[i]);
 						
+
+                        // console.log(results[i]);
+                        // createMarker(results[i], results[i].name, results[i].vicinity);
+
                     }
 					$scope.url = url;
 					$scope.$apply();
@@ -500,11 +562,14 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
                 }
             }
 
+
             function createMarker(place, link) {
                 var placeLoc = place.geometry.location;
 				var placeName = place.name;
                 var marker = new google.maps.Marker({ map: $window.gmap, position: placeLoc,  title: placeName, url: link, });
 				google.maps.event.addListener(marker, 'click', function() {window.location.href = marker.url;});
+
+
 
             }
         }, function(dismiss) {
@@ -519,7 +584,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
         zoom: 18
     });
 
-}).controller('DriveCtrl', function($http, $scope, $window) {
+}).controller('DriveCtrl', function($http, $scope, $window, $rootScope) {
     var dc = this;
     $window.gmap = new google.maps.Map(document.getElementById('map'), {
         center: { lat: 50.04822, lng: 19.96863 },
@@ -527,11 +592,66 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
     });
     var notify = {
         type: 'info',
-        title: 'now! wszystkie miejsca',
+        title: 'now! salony samochodowe',
         content: 'Znaleziono wszystkie najbliższe miejsca',
         timeout: 10000 //time in ms
     };
     var marker;
+    var infowindow;
+
+    var activeWindow;
+
+    var btnLoad = document.getElementById('load');
+    var btnDel = document.getElementById('del');
+    btnLoad.addEventListener('click', function() {
+        var car = localStorage.getItem('car');
+
+        if (car) {
+            $rootScope.carItem = JSON.parse(car);
+            console.log($rootScope.carItem);
+        } else {
+
+            swal({
+                title: 'brak samochodów na liście!',
+                text: 'Określ aktualną lokalizację na mapie, lista zapisze się automatycznie :) dopiero później możesz wczytać',
+                type: 'warning'
+            });
+        }
+
+
+    }, function() { console.log('error'); });
+
+    btnDel.addEventListener('click', function() {
+        if (car) {
+            swal({
+                title: "Lista samochodów",
+                text: "Czy napewno chcesz usunąć?",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: "#00ff9f",
+                cancelButtonColor: 'orangered',
+                confirmButtonText: "Tak",
+                cancelButtonText: "Nie",
+                showLoaderOnConfirm: true
+            }).then(function() {
+                localStorage.clear();
+                swal({
+                    title: 'Usunięto listę',
+                    type: 'success',
+                    showConfirmButton: false
+                });
+                location.reload();
+
+            }, function(dismiss) {
+                if (dismiss === 'cancel') { ''; }
+            });
+        } else { ''; }
+    });
+
+
+
+
+
     // click
     $window.gmap.addListener('click', function(event) {
         // current location
@@ -544,6 +664,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
         }
 
 
+        document.getElementById('pop').play();
 
         console.log('pos:', loc.lat(), loc.lng());
 
@@ -559,6 +680,8 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
             cancelButtonText: "Nie",
             showLoaderOnConfirm: true
         }).then(function() {
+            document.getElementById('detector').play();
+
             $scope.$emit('notify', notify);
 
             var svc = new google.maps.places.PlacesService($window.gmap);
@@ -571,9 +694,14 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 					var url=[];
 					
                     for (var i = 0; i < results.length; i++) {
+
                         var new_name = results[i].name.replace(/ /g, "+");
 						url[i] = 'https://www.google.com/maps/place/' +  new_name + '/@' + results[i].geometry.location.toUrlValue() + ',' + 17 + 'z/';								
                         createMarker(results[i], url[i]);
+
+                        // console.log(results[i]);
+                        // createMarker(results[i], results[i].name, results[i].vicinity);
+
                     }
 					$scope.url = url;
 					$scope.$apply();
@@ -581,25 +709,51 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
                 }
             }
 
+
              function createMarker(place, link) {
                 var placeLoc = place.geometry.location;
 				var placeName = place.name;
                 var marker = new google.maps.Marker({ map: $window.gmap, position: placeLoc,  title: placeName, url: link, });
 				google.maps.event.addListener(marker, 'click', function() {window.location.href = marker.url;});
+
+
+
             }
             $http.get('cars.json').then(function(response) {
                 $scope.cars = response.data.cars;
+                console.log($scope.cars);
+                var arr = [];
+                for (var i = 0; i < $scope.cars.length; i++) {
+                    var name = $scope.cars[i].name;
+                    console.log(name);
+                    arr.push(name);
+
+                }
+                console.log(arr);
+                if (typeof(Storage) !== "undefined") {
+
+                    localStorage.setItem('car', JSON.stringify(arr));
+                }
+
+
+
 
 
 
             });
-            // $http.get('imgs.json').then(function(response) {
-            // $scope.imgs = response.data.imgs;
-            // });
+
+
         }, function(dismiss) {
             if (dismiss === 'cancel') { ''; }
         });
 
     });
+
+
+
+
+
+
+
 
 });
