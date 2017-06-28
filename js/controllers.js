@@ -49,19 +49,24 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
                 if (status === google.maps.places.PlacesServiceStatus.OK) {
                     console.log('length', results.length);
                     $scope.res = results;
-                    $scope.$apply();
+                    var url=[];
 
                     for (var i = 0; i < results.length; i++) {
-                        console.log(results[i]);
-                        createMarker(results[i]);
+                        var new_name = results[i].name.replace(/ /g, "+");
+						url[i] = 'https://www.google.com/maps/place/' +  new_name + '/@' + results[i].geometry.location.toUrlValue() + ',' + 17 + 'z/';								
+                        createMarker(results[i], url[i]);
                     }
+					$scope.url = url;
+					$scope.$apply();
 
                 }
             }
 
-            function createMarker(place) {
+            function createMarker(place, link) {
                 var placeLoc = place.geometry.location;
-                var marker = new google.maps.Marker({ map: $window.gmap, position: placeLoc });
+				var placeName = place.name;
+                var marker = new google.maps.Marker({ map: $window.gmap, position: placeLoc,  title: placeName, url: link, });
+				google.maps.event.addListener(marker, 'click', function() {window.location.href = marker.url;});
             }
         }, function(dismiss) {
             if (dismiss === 'cancel') {
@@ -563,18 +568,24 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
                 if (status === google.maps.places.PlacesServiceStatus.OK) {
                     console.log('length', results.length);
                     $scope.res = results;
-                    $scope.$apply();
+					var url=[];
+					
                     for (var i = 0; i < results.length; i++) {
-                        console.log(results[i]);
-                        createMarker(results[i]);
+                        var new_name = results[i].name.replace(/ /g, "+");
+						url[i] = 'https://www.google.com/maps/place/' +  new_name + '/@' + results[i].geometry.location.toUrlValue() + ',' + 17 + 'z/';								
+                        createMarker(results[i], url[i]);
                     }
+					$scope.url = url;
+					$scope.$apply();
 
                 }
             }
 
-            function createMarker(place) {
+             function createMarker(place, link) {
                 var placeLoc = place.geometry.location;
-                var marker = new google.maps.Marker({ map: $window.gmap, position: placeLoc });
+				var placeName = place.name;
+                var marker = new google.maps.Marker({ map: $window.gmap, position: placeLoc,  title: placeName, url: link, });
+				google.maps.event.addListener(marker, 'click', function() {window.location.href = marker.url;});
             }
             $http.get('cars.json').then(function(response) {
                 $scope.cars = response.data.cars;
