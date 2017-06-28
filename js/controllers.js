@@ -141,7 +141,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 						//console.log(results[i].geometry.location.toUrlValue());
 						var new_name = results[i].name.replace(/ /g, "+");
 						url[i] = 'https://www.google.com/maps/place/' +  new_name + '/@' + results[i].geometry.location.toUrlValue() + ',' + 17 + 'z/';									
-                        createMarker(results[i]);
+                        createMarker(results[i], url[i]);
                     }
 					$scope.url = url;
 					$scope.$apply();
@@ -151,9 +151,12 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
                 }
             }
 
-            function createMarker(place) {
+             function createMarker(place, link) {
                 var placeLoc = place.geometry.location;
-                var marker = new google.maps.Marker({ map: $window.gmap, position: placeLoc });
+				var placeName = place.name;
+                var marker = new google.maps.Marker({ map: $window.gmap, position: placeLoc,  title: placeName, url: link, });
+				google.maps.event.addListener(marker, 'click', function() {window.location.href = marker.url;});
+
             }
         }, function(dismiss) {
             if (dismiss === 'cancel') { ''; }
@@ -483,7 +486,8 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 						
 						var new_name = results[i].name.replace(/ /g, "+");
 						url[i] = 'https://www.google.com/maps/place/' +  new_name + '/@' + results[i].geometry.location.toUrlValue() + ',' + 17 + 'z/';								
-                        createMarker(results[i]);
+                        createMarker(results[i], url[i]);
+						
                     }
 					$scope.url = url;
 					$scope.$apply();
@@ -491,9 +495,12 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
                 }
             }
 
-            function createMarker(place) {
+            function createMarker(place, link) {
                 var placeLoc = place.geometry.location;
-                var marker = new google.maps.Marker({ map: $window.gmap, position: placeLoc });
+				var placeName = place.name;
+                var marker = new google.maps.Marker({ map: $window.gmap, position: placeLoc,  title: placeName, url: link, });
+				google.maps.event.addListener(marker, 'click', function() {window.location.href = marker.url;});
+
             }
         }, function(dismiss) {
             if (dismiss === 'cancel') { ''; }
