@@ -45,10 +45,11 @@
                         <th>Nazwa</th>
                         <th>Adres</th>
                         <th>Ocena</th>
+						 <th>*</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="r in res">
+                    <tr ng-repeat="r in res" >
                         <td>
                             <div ng-if="r.opening_hours.open_now == true">
                                 <span class="label label-success">OTWARTE</span>
@@ -60,6 +61,7 @@
                         <td>{{r.name}}</td>
                         <td>{{r.vicinity}}</td>
                          <td>{{r.rating}}</td>
+						 <td class="link"><a href="{{url[$index]}}">Nawiguj</a></td>
                     </tr>
                 </tbody>
             </table>
@@ -94,3 +96,5 @@
 	</div>
 
 </div>
+
+
