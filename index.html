@@ -51,5 +51,10 @@
     <!--         <audio id="detector" src="metal_detector.mp3"></audio> -->
     <audio id="pop" src="fbpop.mp3"></audio>
 </body>
-
+<script>
+jQuery(document).ready(function($) {
+    $(".clickable-row").click(function() {
+        window.location = $(this).data("href");
+    });
+});</script>
 </html>

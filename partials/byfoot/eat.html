@@ -45,6 +45,7 @@
                         <th>Nazwa</th>
                         <th>Adres</th>
                         <th>Ocena</th>
+						<th>*</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -53,6 +54,7 @@
                         <td>{{r.name}}</td>
                         <td>{{r.vicinity}}</td>
                         <td>{{r.rating}}</td>
+						<td class="link"><a href="{{url[$index]}}">Nawiguj</a></td>
                     </tr>
                 </tbody>
             </table> 
