@@ -45,7 +45,7 @@
                         <th>Nazwa</th>
                         <th>Adres</th>
                         <th>Ocena</th>
-                        <th>*</th>
+						<th>*</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -54,34 +54,38 @@
                         <td>{{r.name}}</td>
                         <td>{{r.vicinity}}</td>
                         <td>{{r.rating}}</td>
-                        <td class="link"><a href="{{url[$index]}}" class="btn btn-success btn-xs " target="_blank">NAWIGUJ <i class="fa fa-arrow-right" aria-hidden="true"></i></a></td>
+						<td class="link"><a href="{{url[$index]}}" class="btn btn-success btn-xs ">NAWIGUJ <i class="fa fa-arrow-right" aria-hidden="true"></i></a></td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">
-                Jedzenie
-            </h4>
-                </div>
-                <div class="modal-body">
-                    <p>
-                        Wybrałeś profil "jedzenie". Aby wyświetlić listę najbliższych restaracji wskaż swoją pozycje na mapie.
-                    </p>
-                    <p>
-                        Po wskazaniu swojej pozycji zostanie wyświetlona lista najbliższych restauracji wraz z ocenami oraz zostaną one zaznaczone na mapie.
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Zamknij</button>
-                </div>
-            </div>
-        </div>
-    </div>
+	
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="myModalLabel">
+				Jedzenie
+			</h4>
+		  </div>
+		  <div class="modal-body">
+			<p>
+				Wybrałeś profil "jedzenie". Aby wyświetlić listę najbliższych restaracji wskaż swoją pozycje na mapie.
+			</p>
+			<p>
+				Po wskazaniu swojej pozycji zostanie wyświetlona lista najbliższych restauracji wraz z ocenami oraz zostaną one zaznaczone na mapie. 
+			</p>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-danger" data-dismiss="modal">Zamknij</button>
+		 
+		  </div>
+		</div>
+	  </div>
+	</div>
+
+	
 </div>
