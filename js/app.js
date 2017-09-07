@@ -14,6 +14,25 @@ angular.module('nowApp', ['ngRoute', 'ngAnimate', 'angularNotify', 'oitozero.ngS
     }).when('/eat', {
         templateUrl: 'partials/byfoot/eat.html',
         controller: 'EatCtrl'
+		 }).when('/history', {
+        templateUrl: 'partials/history.html',
+        controller: 'HistoryCtrl'
+		}).when('/delete_history', {
+        templateUrl: 'partials/history.html',
+        controller: 'DeleteCtrl'
+			}).when('/about', {
+        templateUrl: 'partials/about.html',
+        controller: 'AboutCtrl'
+			}).when('/gas', {
+        templateUrl: 'partials/gas.html',
+        controller: 'GasCtrl'
+		
+	}).when('/details/:origin_lat/:origin_lng/:dest_lat/:dest_lng/:target', {
+        templateUrl:'partials/details.html',
+        controller:'DetailsCtrl'
+
+ 
+
 
     }).when('/drive', {
         templateUrl: 'partials/drive/driver.html',

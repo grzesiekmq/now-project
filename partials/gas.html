@@ -1,0 +1,82 @@
+<div ng-controller="BuyCtrl as bc">
+    <div class="row">
+        <div class="col-md-4 col-sm-4 col-xs-0">
+        </div>
+        <div class="col-md-4 col-sm-4 col-xs-12">
+
+            <div class="panel panel-primary text-center no-boder bg-color-blue">
+                <div class="panel-footer back-footer-blue">
+                    Wybrany profil:
+
+                </div>
+                <div class="panel-body">
+                    <i class="fa fa-shopping-cart fa-5x"></i>
+                    <h3>Zakupy </h3>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default" ng-if='res.length > 0'>
+        <div class="panel-heading">Najbliższe parkingi: </div>
+        <div class="panel-body">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>*</th>
+                        <th>Nazwa</th>
+                        <th>Adres</th>
+                        <th>*</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="r in res" >
+                        <td>
+                            <div ng-if="r.opening_hours.open_now == true">
+                                <span class="label label-success">OTWARTE</span>
+                            </div>
+                            <div ng-if=""r.opening_hours.open_now == false">
+                                 <span class="label label-warning">ZAMKNIĘTE</span>
+                            </div>
+                        </td>
+                        <td>{{r.name}}</td>
+                        <td>{{r.vicinity}}</td>
+
+                        <td class="link"><a href="#/details/{{loc.lat()}}/{{loc.lng()}}/{{r.geometry.location.lat()}}/{{r.geometry.location.lng()}}/{{r.name}}" class="btn btn-success btn-xs ">NAWIGUJ <i class="fa fa-arrow-right" aria-hidden="true"></i></a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="panel-footer">Znaleziono: {{ res.length}}</div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        Zakupy
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Wybrałeś profil "zakupy". Aby wyświetlić listę znajdujących się w pobliżu sklepów wskaż swoją pozycję na mapie.
+                    </p>
+                    <p>
+                        Po wskazaniu swojej pozycji zostanie wyświetlona lista najbliższych sklepów oraz zostaną one zaznaczone na mapie. 
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Zamknij</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
