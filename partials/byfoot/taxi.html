@@ -25,7 +25,10 @@
                     <tbody>
                         <tr ng-repeat="r in res">
                             <td>{{r.name}}</td>
+
                             <td class="link"><a href="#/details/{{loc.lat()}}/{{loc.lng()}}/{{r.geometry.location.lat()}}/{{r.geometry.location.lng()}}/{{r.name}}" class="btn btn-success btn-xs ">NAWIGUJ <i class="fa fa-arrow-right" aria-hidden="true"></i></a></td>
+
+							
                         </tr>
                     </tbody>
                 </table>

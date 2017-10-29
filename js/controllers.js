@@ -97,7 +97,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
                 var placeLoc = place.geometry.location;
 				var placeName = place.name;
                 var marker = new google.maps.Marker({ map: $window.gmap, position: placeLoc,  title: placeName, url: link, });
-				google.maps.event.addListener(marker, 'click', function() {window.location.href = marker.url;});
+                google.maps.event.addListener(marker, 'click', function() { window.open(marker.url, '_blank'); });
 
             }
         }, function(dismiss) {
@@ -225,7 +225,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
                 var placeLoc = place.geometry.location;
 				var placeName = place.name;
                 var marker = new google.maps.Marker({ map: $window.gmap, position: placeLoc,  title: placeName, url: link, });
-				google.maps.event.addListener(marker, 'click', function() {window.location.href = marker.url;});
+                google.maps.event.addListener(marker, 'click', function() { window.open(marker.url, '_blank'); });
 
 
 
@@ -447,7 +447,7 @@ console.log(lt2);
 						
 						var new_name = results[i].name.replace(/ /g, "+");
 						url[i] = 'https://www.google.com/maps/place/' +  new_name + '/@' + results[i].geometry.location.toUrlValue() + ',' + 17 + 'z/';								
-                        createMarker(results[i]);
+                        createMarker(results[i], url[i]);
 
 
                        // createMarker(results[i], results[i].name, results[i].vicinity);
@@ -462,24 +462,13 @@ console.log(lt2);
             }
 
 
-            function createMarker(place, name, v) {
+            function createMarker(place, link) {
                 var placeLoc = place.geometry.location;
-                var marker = new google.maps.Marker({ map: $window.gmap, position: placeLoc });
-                infowindow = new google.maps.InfoWindow();
+				var placeName = place.name;
+                var marker = new google.maps.Marker({ map: $window.gmap, position: placeLoc,  title: placeName, url: link, });
+                google.maps.event.addListener(marker, 'click', function() { window.open(marker.url, '_blank'); });
 
-                infowindow.setContent(name + '<br>' + v);
-                marker.infowindow = infowindow;
-                marker.addListener('click', info());
 
-                function info() {
-
-                    return function() {
-                        if (activeWindow != undefined)
-                            activeWindow.close();
-                        this.infowindow.open(marker.get('map'), this);
-                        activeWindow = infowindow;
-                    };
-                }
 
             }
 
@@ -636,7 +625,7 @@ console.log(lt2);
                 var placeLoc = place.geometry.location;
 				var placeName = place.name;
                 var marker = new google.maps.Marker({ map: $window.gmap, position: placeLoc,  title: placeName, url: link, });
-				google.maps.event.addListener(marker, 'click', function() {window.location.href = marker.url;});
+                google.maps.event.addListener(marker, 'click', function() { window.open(marker.url, '_blank'); });
 
 
 
@@ -975,7 +964,7 @@ document.getElementById("brak").className = "panel panel-default";
                 var placeLoc = place.geometry.location;
 				var placeName = place.name;
                 var marker = new google.maps.Marker({ map: $window.gmap, position: placeLoc,  title: placeName, url: link, });
-				google.maps.event.addListener(marker, 'click', function() {window.location.href = marker.url;});
+                google.maps.event.addListener(marker, 'click', function() { window.open(marker.url, '_blank'); });
 
 
 
