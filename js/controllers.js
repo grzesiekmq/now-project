@@ -5,12 +5,17 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
         center: { lat: 50.0619625, lng: 19.9371255 },
         zoom: 18
     });
+	
+	document.getElementById("map_title").innerHTML = "Wskaż swoją pozycje na mapie: ";
+	document.getElementById("map_panel").className = "panel panel-default";
+	
     var notify = {
         type: 'info',
         title: 'now! wszystkie miejsca',
         content: 'Znaleziono wszystkie najbliższe miejsca',
         timeout: 10000 //time in ms
     };
+	
     var marker;
     var infowindow;
     var activeWindow;
@@ -28,10 +33,29 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 
         document.getElementById('pop').play();
         console.log('pos:', loc.lat(), loc.lng());
+		console.log(loc);
+		
+		var retrievedObject = localStorage.getItem('geoHistory');
+		locationTab = JSON.parse(retrievedObject);
+		
+		if(locationTab == null){
+			var newLocationTab = [];
+			newLocationTab[0] = [loc.lat(), loc.lng()];
+			localStorage.setItem('geoHistory', JSON.stringify(newLocationTab));
+		}else {	
+			locationTab[locationTab.length] = [loc.lat(), loc.lng()];
+			localStorage.setItem('geoHistory', JSON.stringify(locationTab));
+		}
+
+
+		var ro = localStorage.getItem('geoHistory');
+		lt2 = JSON.parse(ro);
+		console.log(lt2);
+
         // confirm
         swal({
-            title: "najbliższe miejsca",
-            text: "Czy chcesz wyszukać najbliższe miejsca?",
+            title: "Najbliższe miejsca",
+            text: "Czy chcesz wyszukać wszystkie najbliższe miejsca?",
             imageUrl: "https://cdn2.iconfinder.com/data/icons/color-svg-vector-icons-2/512/help_support_question_mark-256.png",
             showCancelButton: true,
             confirmButtonColor: "#00ff9f",
@@ -51,6 +75,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
                 if (status === google.maps.places.PlacesServiceStatus.OK) {
                     console.log('length', results.length);
                     $scope.res = results;
+					$scope.loc = loc;
                     var url=[];
 
                     for (var i = 0; i < results.length; i++) {
@@ -60,17 +85,10 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
                         createMarker(results[i], url[i]);
 
                         console.log(results[i]);
-
                         // createMarker(results[i], results[i].name, results[i].vicinity);
-
-
-
-
-
                     }
 					$scope.url = url;
 					$scope.$apply();
-
                 }
             }
 
@@ -100,6 +118,8 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
         center: { lat: 50.0619625, lng: 19.9371255 },
         zoom: 18
     });
+		document.getElementById("map_title").innerHTML = "Wskaż swoją pozycje na mapie: ";
+	document.getElementById("map_panel").className = "panel panel-default";
     var notify = {
         type: 'info',
         title: 'now! najbliższe sklepy',
@@ -128,6 +148,21 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 
         console.log('pos:', loc.lat(), loc.lng());
 
+		var retrievedObject = localStorage.getItem('geoHistory');
+		locationTab = JSON.parse(retrievedObject);
+		if(locationTab == null){
+			var newLocationTab = [];
+			newLocationTab[0] = [loc.lat(), loc.lng()];
+			localStorage.setItem('geoHistory', JSON.stringify(newLocationTab));
+		}else {	
+			locationTab[locationTab.length] = [loc.lat(), loc.lng()];
+			localStorage.setItem('geoHistory', JSON.stringify(locationTab));
+		}
+
+		var ro = localStorage.getItem('geoHistory');
+		lt2 = JSON.parse(ro);
+		console.log(lt2);
+		
         swal({
             title: "najbliższe miejsca",
             text: "Czy chcesz wyszukać najbliższe miejsca?",
@@ -176,6 +211,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
                        // createMarker(results[i], results[i].name, results[i].vicinity);
 
                     }
+					$scope.loc = loc;
 					$scope.url = url;
 					$scope.$apply();
 					//console.log(url);
@@ -211,6 +247,8 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
         center: { lat: 50.0619625, lng: 19.9371255 },
         zoom: 18
     });
+		document.getElementById("map_title").innerHTML = "Wskaż swoją pozycje na mapie: ";
+	document.getElementById("map_panel").className = "panel panel-default";
     var notify = {
         type: 'info',
         title: 'now! postoje taxi',
@@ -238,7 +276,23 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
         document.getElementById('pop').play();
 
         console.log('pos:', loc.lat(), loc.lng());
+		var retrievedObject = localStorage.getItem('geoHistory');
+		locationTab = JSON.parse(retrievedObject);
+		if(locationTab == null){
+			var newLocationTab = [];
+		newLocationTab[0] = [loc.lat(), loc.lng()];
+		localStorage.setItem('geoHistory', JSON.stringify(newLocationTab));
+		}else {
+			
+		locationTab[locationTab.length] = [loc.lat(), loc.lng()];
 
+		localStorage.setItem('geoHistory', JSON.stringify(locationTab));
+		}
+
+
+var ro = localStorage.getItem('geoHistory');
+lt2 = JSON.parse(ro);
+console.log(lt2);
 
         swal({
             title: "najbliższe miejsca",
@@ -400,6 +454,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 
                     }
 					$scope.url = url;
+					$scope.loc = loc;
 					$scope.$apply();
 
 
@@ -451,18 +506,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
             var directionsDisplay = new google.maps.DirectionsRenderer();
             directionsDisplay.setMap($window.gmap);
 
-            var svcDi = new google.maps.DirectionsService;
-
-            svcDi.route({
-                    origin: loc,
-                    destination: { lat: 50.06591539999999, lng: 19.939136899999994 },
-                    travelMode: 'WALKING'
-                },
-                function(result) {
-                    directionsDisplay.setDirections(result);
-
-                    console.log(result);
-                });
+            
 
 
         }, function(dismiss) {
@@ -478,6 +522,8 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
         center: { lat: 50.0619625, lng: 19.9371255 },
         zoom: 18
     });
+		document.getElementById("map_title").innerHTML = "Wskaż swoją pozycje na mapie: ";
+	document.getElementById("map_panel").className = "panel panel-default";
     var notify = {
         type: 'info',
         title: 'now! restauracje i bary',
@@ -503,8 +549,30 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 
         document.getElementById('pop').play();
 
-        console.log('pos:', loc.lat(), loc.lng());
+        console.log('posx:', loc.lat(), loc.lng());
+		
+		
 
+
+
+
+var retrievedObject = localStorage.getItem('geoHistory');
+locationTab = JSON.parse(retrievedObject);
+if(locationTab == null){
+	var newLocationTab = [];
+newLocationTab[0] = [loc.lat(), loc.lng()];
+localStorage.setItem('geoHistory', JSON.stringify(newLocationTab));
+}else {
+	
+locationTab[locationTab.length] = [loc.lat(), loc.lng()];
+
+localStorage.setItem('geoHistory', JSON.stringify(locationTab));
+}
+
+
+var ro = localStorage.getItem('geoHistory');
+lt2 = JSON.parse(ro);
+console.log(lt2);
 
         swal({
             title: "najbliższe miejsca",
@@ -546,6 +614,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 
                     }
 					$scope.url = url;
+					$scope.loc = loc;
 					$scope.$apply();
 
                 }
@@ -566,13 +635,205 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
         });
 
     });
+	
+	}).controller('GasCtrl', function($http, $scope, $window) {
+    var ec = this;
+    $window.gmap = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: 50.0619625, lng: 19.9371255 },
+        zoom: 18
+    });
+		document.getElementById("map_title").innerHTML = "Wskaż swoją pozycje na mapie: ";
+	document.getElementById("map_panel").className = "panel panel-default";
+    var notify = {
+        type: 'info',
+        title: 'now! stacja paliw',
+        content: 'Znaleziono wszystkie najbliższe miejsca',
+        timeout: 10000 //time in ms
+    };
+    var marker;
+    var infowindow;
+
+    var activeWindow;
+
+    // click
+    $window.gmap.addListener('click', function(event) {
+        // current location
+        var loc = event.latLng;
+        if (marker != undefined) {
+            marker.setPosition(loc);
+        } else {
+
+            marker = new google.maps.Marker({ position: loc, map: $window.gmap, icon: './img/navigation.png', draggable: true });
+        }
+
+
+        document.getElementById('pop').play();
+
+        console.log('posx:', loc.lat(), loc.lng());
+		
+		
+
+
+
+
+var retrievedObject = localStorage.getItem('geoHistory');
+locationTab = JSON.parse(retrievedObject);
+if(locationTab == null){
+	var newLocationTab = [];
+newLocationTab[0] = [loc.lat(), loc.lng()];
+localStorage.setItem('geoHistory', JSON.stringify(newLocationTab));
+}else {
+	
+locationTab[locationTab.length] = [loc.lat(), loc.lng()];
+
+localStorage.setItem('geoHistory', JSON.stringify(locationTab));
+}
+
+
+var ro = localStorage.getItem('geoHistory');
+lt2 = JSON.parse(ro);
+console.log(lt2);
+
+        swal({
+            title: "najbliższe miejsca",
+            text: "Czy chcesz wyszukać najbliższe miejsca?",
+            imageUrl: "https://cdn2.iconfinder.com/data/icons/color-svg-vector-icons-2/512/help_support_question_mark-256.png",
+            showCancelButton: true,
+            confirmButtonColor: "#00ff9f",
+            cancelButtonColor: 'orangered',
+            confirmButtonText: "Tak",
+            cancelButtonText: "Nie",
+            showLoaderOnConfirm: true
+        }).then(function() {
+            document.getElementById('detector').play();
+            $scope.$emit('notify', notify);
+
+
+
+            var svc = new google.maps.places.PlacesService($window.gmap);
+            svc.nearbySearch({ location: loc, radius: 1000, types: ['gas_station'] }, callback);
+
+            function callback(results, status) {
+                if (status === google.maps.places.PlacesServiceStatus.OK) {
+                    console.log('length', results.length);
+                    console.log(results);
+                    $scope.res = results;
+                    
+					var url=[];
+
+                    for (var i = 0; i < results.length; i++) {
+
+						
+						var new_name = results[i].name.replace(/ /g, "+");
+						url[i] = 'https://www.google.com/maps/place/' +  new_name + '/@' + results[i].geometry.location.toUrlValue() + ',' + 17 + 'z/';								
+                        createMarker(results[i], url[i]);
+						
+
+                        // console.log(results[i]);
+                        // createMarker(results[i], results[i].name, results[i].vicinity);
+
+                    }
+					$scope.url = url;
+					$scope.loc = loc;
+					$scope.$apply();
+
+                }
+            }
+
+
+            function createMarker(place, link) {
+                var placeLoc = place.geometry.location;
+				var placeName = place.name;
+                var marker = new google.maps.Marker({ map: $window.gmap, position: placeLoc,  title: placeName, url: link, });
+				google.maps.event.addListener(marker, 'click', function() {window.location.href = marker.url;});
+
+
+
+            }
+        }, function(dismiss) {
+            if (dismiss === 'cancel') { ''; }
+        });
+
+    });
+	
+	}).controller('DetailsCtrl', function($http, $scope, $routeParams, $window) {
+     $scope.origin_lat = $routeParams.origin_lat;
+	    $scope.origin_lng = $routeParams.origin_lng;
+		   $scope.dest_lat = $routeParams.dest_lat;
+		   		   $scope.dest_lng = $routeParams.dest_lng;
+				      $scope.target = $routeParams.target;
+	
+$window.gmap = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: 50.0619625, lng: 19.9371255 },
+        zoom: 18
+    });
+document.getElementById("map_title").innerHTML = "Trasa do wybranego celu: ";
+	
+	
+            var directionsDisplay = new google.maps.DirectionsRenderer();
+            directionsDisplay.setMap($window.gmap);
+
+            var svcDi = new google.maps.DirectionsService;
+ var originLoc = new google.maps.LatLng($scope.origin_lat, $scope.origin_lng);
+
+ var destLoc = new google.maps.LatLng($scope.dest_lat, $scope.dest_lng);
+            svcDi.route({
+                    origin:  originLoc,
+                    destination: destLoc,
+                    travelMode: 'WALKING'
+                },
+                function(result) {
+                    directionsDisplay.setDirections(result);
+
+                    console.log(result);
+                });
+				
+						 
+				var svcDM = new google.maps.DistanceMatrixService;
+
+                            svcDM.getDistanceMatrix({
+                                origins: [originLoc],
+                                destinations: [destLoc],
+                                travelMode: 'WALKING',
+                                unitSystem: google.maps.UnitSystem.METRIC
+                            }, function(response) {
+                                $scope.nearTaxi = response.destinationAddresses["0"];
+                                if (response.rows[0].elements[0].distance.value > 999) {
+                                    $scope.dist = response.rows["0"].elements["0"].distance.text;
+                                } else {
+                                    $scope.dist = response.rows[0].elements[0].distance.value + 'm';
+                                }
+                                $scope.distVal = response.rows["0"].elements["0"].duration.text;
+                                $scope.$apply();
+
+							});
+		
+    
 
 }).controller('ByFootCtrl', function($window) {
     $window.gmap = new google.maps.Map(document.getElementById('map'), {
         center: { lat: 50.0619625, lng: 19.9371255 },
         zoom: 18
     });
+	
+	}).controller('HistoryCtrl', function($window, $scope) {
 
+	document.getElementById("map_panel").className = "hidden";
+		var retrievedObject = localStorage.getItem('geoHistory');
+locationTab = JSON.parse(retrievedObject);
+   $scope.history = locationTab;
+    console.log(locationTab);
+	document.getElementById("brak").className = "panel panel-default";
+
+		}).controller('DeleteCtrl', function($window, $scope) {
+		localStorage.removeItem('geoHistory');
+document.getElementById("brak").className = "panel panel-default";
+	document.getElementById("map_panel").className = "hidden";
+
+	
+			}).controller('AboutCtrl', function($window, $scope) {
+	document.getElementById("map_panel").className = "hidden";
+	
 }).controller('DriveCtrl', function($http, $scope, $window, $rootScope) {
     var dc = this;
     $window.gmap = new google.maps.Map(document.getElementById('map'), {
