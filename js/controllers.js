@@ -53,8 +53,8 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 		console.log(lt2);
 
         // confirm
-        var confirm = confirm("Czy chcesz wyszukać wszystkie najbliższe miejsca?");
-	if (confirm){
+        var c = confirm("Czy chcesz wyszukać wszystkie najbliższe miejsca?");
+	if (c){
 	   /* swal({
             title: "Najbliższe miejsca",
             text: "Czy chcesz wyszukać wszystkie najbliższe miejsca?",
@@ -162,8 +162,8 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 		var ro = localStorage.getItem('geoHistory');
 		lt2 = JSON.parse(ro);
 		console.log(lt2);
-		var confirm = confirm("Czy chcesz wyszukać wszystkie najbliższe miejsca?");
-	if (confirm){
+		var c = confirm("Czy chcesz wyszukać wszystkie najbliższe miejsca?");
+	if (c){
        /* swal({
             title: "najbliższe miejsca",
             text: "Czy chcesz wyszukać najbliższe miejsca?",
@@ -293,8 +293,8 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 var ro = localStorage.getItem('geoHistory');
 lt2 = JSON.parse(ro);
 console.log(lt2);
-var confirm = confirm("Czy chcesz wyszukać wszystkie najbliższe miejsca?");
-	if (confirm){
+var c = confirm("Czy chcesz wyszukać wszystkie najbliższe miejsca?");
+	if (c){
        /* swal({
             title: "najbliższe miejsca",
             text: "Czy chcesz wyszukać najbliższe miejsca?",
@@ -573,8 +573,8 @@ localStorage.setItem('geoHistory', JSON.stringify(locationTab));
 var ro = localStorage.getItem('geoHistory');
 lt2 = JSON.parse(ro);
 console.log(lt2);
-var confirm = confirm("Czy chcesz wyszukać wszystkie najbliższe miejsca?");
-	if (confirm){
+var c = confirm("Czy chcesz wyszukać wszystkie najbliższe miejsca?");
+	if (c){
       /*  swal({
             title: "najbliższe miejsca",
             text: "Czy chcesz wyszukać najbliższe miejsca?",
@@ -695,8 +695,8 @@ localStorage.setItem('geoHistory', JSON.stringify(locationTab));
 var ro = localStorage.getItem('geoHistory');
 lt2 = JSON.parse(ro);
 console.log(lt2);
-var confirm = confirm("Czy chcesz wyszukać wszystkie najbliższe miejsca?");
-	if (confirm){
+var c = confirm("Czy chcesz wyszukać wszystkie najbliższe miejsca?");
+	if (c){
        /* swal({
             title: "najbliższe miejsca",
             text: "Czy chcesz wyszukać najbliższe miejsca?",
@@ -920,8 +920,8 @@ document.getElementById("brak").className = "panel panel-default";
 
         console.log('pos:', loc.lat(), loc.lng());
 
-var confirm = confirm("Czy chcesz wyszukać wszystkie najbliższe miejsca?");
-	if (confirm){
+var c = confirm("Czy chcesz wyszukać wszystkie najbliższe miejsca?");
+	if (c){
        /* swal({
             title: "najbliższe miejsca",
             text: "Czy chcesz wyszukać najbliższe miejsca?",
