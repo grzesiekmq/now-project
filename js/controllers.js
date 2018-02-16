@@ -107,8 +107,9 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 
    // });
     } else { '';}
-
     });
+
+
 
 
 }).controller('BuyCtrl', function($http, $window, $scope) {
@@ -874,7 +875,7 @@ document.getElementById("brak").className = "panel panel-default";
 
     }, function() { console.log('error'); });
 
-    btnDel.addEventListener('click', function() {
+   /* btnDel.addEventListener('click', function() {
         if (car) {
             swal({
                 title: "Lista samochodów",
@@ -895,12 +896,10 @@ document.getElementById("brak").className = "panel panel-default";
                 });
                 location.reload();
 
-            }, function(dismiss) {
-                if (dismiss === 'cancel') { ''; }
-            });
+            
         } else { ''; }
     });
-
+*/
 
 
 
@@ -1003,15 +1002,12 @@ var confirm = confirm("Czy chcesz wyszukać wszystkie najbliższe miejsca?");
 //     });
 
     } else{'';}
-    });
-
-    
-
 
 
     
-    
-
-
 
 });
+});
+    
+    
+
