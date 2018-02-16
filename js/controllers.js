@@ -103,11 +103,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
                 google.maps.event.addListener(marker, 'click', function() { window.open(marker.url, '_blank'); });
 
             }
-        }, function(dismiss) {
-            if (dismiss === 'cancel') {
-                '';
-            }
-        });
+        
 
    // });
     } else { '';}
@@ -235,9 +231,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 
 
             }
-        }, function(dismiss) {
-            if (dismiss === 'cancel') { ''; }
-        });
+        
 //     });
 
     } else{'';}
@@ -516,11 +510,7 @@ var confirm = confirm("Czy chcesz wyszukać wszystkie najbliższe miejsca?");
             
 
 
-        }, function(dismiss) {
-            if (dismiss === 'cancel') {
-                '';
-            }
-        });
+        
 //     });
     } else{'';}
 
@@ -640,9 +630,7 @@ var confirm = confirm("Czy chcesz wyszukać wszystkie najbliższe miejsca?");
 
 
             }
-        }, function(dismiss) {
-            if (dismiss === 'cancel') { ''; }
-        });
+        
 
 //     });
     } else{'';}
@@ -763,9 +751,7 @@ var confirm = confirm("Czy chcesz wyszukać wszystkie najbliższe miejsca?");
 
 
             }
-        }, function(dismiss) {
-            if (dismiss === 'cancel') { ''; }
-        });
+        
 
 //     });
     } else{'';}
@@ -1009,19 +995,20 @@ var confirm = confirm("Czy chcesz wyszukać wszystkie najbliższe miejsca?");
             });
 
 
-        }, function(dismiss) {
-            if (dismiss === 'cancel') { ''; }
-    //    });
-} else{'';}
+        
 
-     });
+//     });
+
+    } else{'';}
+
 
     
 
-
-
-
-
-
-
+});
+});
+    
+    });
+});
+});
+});
 });
