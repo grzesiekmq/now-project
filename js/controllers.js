@@ -110,7 +110,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
         });
 
    // });
-    }
+    } else { '';}
 
 
 
@@ -165,8 +165,9 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 		var ro = localStorage.getItem('geoHistory');
 		lt2 = JSON.parse(ro);
 		console.log(lt2);
-		
-        swal({
+		var confirm = confirm("Czy chcesz wyszukać wszystkie najbliższe miejsca?");
+	if (confirm){
+       /* swal({
             title: "najbliższe miejsca",
             text: "Czy chcesz wyszukać najbliższe miejsca?",
             imageUrl: "https://cdn2.iconfinder.com/data/icons/color-svg-vector-icons-2/512/help_support_question_mark-256.png",
@@ -176,7 +177,8 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
             confirmButtonText: "Tak",
             cancelButtonText: "Nie",
             showLoaderOnConfirm: true
-        }).then(function() {
+       */
+    //}).then(function() {
             document.getElementById('detector').play();
             $scope.$emit('notify', notify);
 
@@ -236,9 +238,9 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
         }, function(dismiss) {
             if (dismiss === 'cancel') { ''; }
         });
-    });
+//     });
 
-
+    } else{'';}
 
 
 
@@ -296,8 +298,9 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 var ro = localStorage.getItem('geoHistory');
 lt2 = JSON.parse(ro);
 console.log(lt2);
-
-        swal({
+var confirm = confirm("Czy chcesz wyszukać wszystkie najbliższe miejsca?");
+	if (confirm){
+       /* swal({
             title: "najbliższe miejsca",
             text: "Czy chcesz wyszukać najbliższe miejsca?",
             imageUrl: "https://cdn2.iconfinder.com/data/icons/color-svg-vector-icons-2/512/help_support_question_mark-256.png",
@@ -307,7 +310,8 @@ console.log(lt2);
             confirmButtonText: "Tak",
             cancelButtonText: "Nie",
             showLoaderOnConfirm: true
-        }).then(function() {
+       */
+	// }).then(function() {
             var placeLoc;
             var taxiPos;
 
@@ -517,7 +521,8 @@ console.log(lt2);
                 '';
             }
         });
-    });
+//     });
+    } else{'';}
 
 }).controller('EatCtrl', function($http, $scope, $window) {
     var ec = this;
@@ -576,8 +581,9 @@ localStorage.setItem('geoHistory', JSON.stringify(locationTab));
 var ro = localStorage.getItem('geoHistory');
 lt2 = JSON.parse(ro);
 console.log(lt2);
-
-        swal({
+var confirm = confirm("Czy chcesz wyszukać wszystkie najbliższe miejsca?");
+	if (confirm){
+      /*  swal({
             title: "najbliższe miejsca",
             text: "Czy chcesz wyszukać najbliższe miejsca?",
             imageUrl: "https://cdn2.iconfinder.com/data/icons/color-svg-vector-icons-2/512/help_support_question_mark-256.png",
@@ -587,7 +593,8 @@ console.log(lt2);
             confirmButtonText: "Tak",
             cancelButtonText: "Nie",
             showLoaderOnConfirm: true
-        }).then(function() {
+    */
+// 	}).then(function() {
             document.getElementById('detector').play();
             $scope.$emit('notify', notify);
 
@@ -637,7 +644,8 @@ console.log(lt2);
             if (dismiss === 'cancel') { ''; }
         });
 
-    });
+//     });
+    } else{'';}
 	
 	}).controller('GasCtrl', function($http, $scope, $window) {
     var ec = this;
@@ -696,8 +704,9 @@ localStorage.setItem('geoHistory', JSON.stringify(locationTab));
 var ro = localStorage.getItem('geoHistory');
 lt2 = JSON.parse(ro);
 console.log(lt2);
-
-        swal({
+var confirm = confirm("Czy chcesz wyszukać wszystkie najbliższe miejsca?");
+	if (confirm){
+       /* swal({
             title: "najbliższe miejsca",
             text: "Czy chcesz wyszukać najbliższe miejsca?",
             imageUrl: "https://cdn2.iconfinder.com/data/icons/color-svg-vector-icons-2/512/help_support_question_mark-256.png",
@@ -707,7 +716,8 @@ console.log(lt2);
             confirmButtonText: "Tak",
             cancelButtonText: "Nie",
             showLoaderOnConfirm: true
-        }).then(function() {
+      */
+// 	}).then(function() {
             document.getElementById('detector').play();
             $scope.$emit('notify', notify);
 
@@ -757,7 +767,8 @@ console.log(lt2);
             if (dismiss === 'cancel') { ''; }
         });
 
-    });
+//     });
+    } else{'';}
 	
 	}).controller('DetailsCtrl', function($http, $scope, $routeParams, $window) {
      $scope.origin_lat = $routeParams.origin_lat;
@@ -921,8 +932,9 @@ document.getElementById("brak").className = "panel panel-default";
 
         console.log('pos:', loc.lat(), loc.lng());
 
-
-        swal({
+var confirm = confirm("Czy chcesz wyszukać wszystkie najbliższe miejsca?");
+	if (confirm){
+       /* swal({
             title: "najbliższe miejsca",
             text: "Czy chcesz wyszukać najbliższe miejsca?",
             imageUrl: "https://cdn2.iconfinder.com/data/icons/color-svg-vector-icons-2/512/help_support_question_mark-256.png",
@@ -932,7 +944,8 @@ document.getElementById("brak").className = "panel panel-default";
             confirmButtonText: "Tak",
             cancelButtonText: "Nie",
             showLoaderOnConfirm: true
-        }).then(function() {
+       */
+// 	}).then(function() {
             document.getElementById('detector').play();
 
             $scope.$emit('notify', notify);
@@ -1000,8 +1013,9 @@ document.getElementById("brak").className = "panel panel-default";
             if (dismiss === 'cancel') { ''; }
         });
 
-    });
+//     });
 
+    } else{'';}
 
 
 
