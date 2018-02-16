@@ -4,9 +4,9 @@
  * See: https://github.com/webpack/webpack/issues/3929
  */
 
-if (typeof window !== 'undefined') {
-  require('./sweetalert.scss');
-}
+//if (typeof window !== 'undefined') {
+//  require('./sweetalert.scss');
+//}
 
 require('./polyfills');
 
