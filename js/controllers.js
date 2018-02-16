@@ -1011,11 +1011,12 @@ var confirm = confirm("Czy chcesz wyszukać wszystkie najbliższe miejsca?");
 
         }, function(dismiss) {
             if (dismiss === 'cancel') { ''; }
-        });
+    //    });
+} else{'';}
 
-//     });
+     });
 
-    } else{'';}
+    
 
 
 
