@@ -108,7 +108,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
    // });
     } else { '';}
 
-
+    });
 
 
 }).controller('BuyCtrl', function($http, $window, $scope) {
@@ -236,7 +236,7 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 
     } else{'';}
 
-
+    });
 
 
 
@@ -513,6 +513,7 @@ var confirm = confirm("Czy chcesz wyszukać wszystkie najbliższe miejsca?");
         
 //     });
     } else{'';}
+    });
 
 }).controller('EatCtrl', function($http, $scope, $window) {
     var ec = this;
@@ -634,6 +635,7 @@ var confirm = confirm("Czy chcesz wyszukać wszystkie najbliższe miejsca?");
 
 //     });
     } else{'';}
+    });
 	
 	}).controller('GasCtrl', function($http, $scope, $window) {
     var ec = this;
@@ -755,6 +757,7 @@ var confirm = confirm("Czy chcesz wyszukać wszystkie najbliższe miejsca?");
 
 //     });
     } else{'';}
+    });
 	
 	}).controller('DetailsCtrl', function($http, $scope, $routeParams, $window) {
      $scope.origin_lat = $routeParams.origin_lat;
@@ -1000,15 +1003,15 @@ var confirm = confirm("Czy chcesz wyszukać wszystkie najbliższe miejsca?");
 //     });
 
     } else{'';}
-
-
-    
-
-});
-});
-    
     });
-});
-});
-});
+
+    
+
+
+
+    
+    
+
+
+
 });
