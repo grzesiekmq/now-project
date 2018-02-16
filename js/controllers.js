@@ -53,7 +53,9 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
 		console.log(lt2);
 
         // confirm
-        swal({
+        var confirm = confirm("Czy chcesz wyszukać wszystkie najbliższe miejsca?");
+	if (confirm){
+	   /* swal({
             title: "Najbliższe miejsca",
             text: "Czy chcesz wyszukać wszystkie najbliższe miejsca?",
             imageUrl: "https://cdn2.iconfinder.com/data/icons/color-svg-vector-icons-2/512/help_support_question_mark-256.png",
@@ -63,7 +65,8 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
             confirmButtonText: "Tak",
             cancelButtonText: "Nie",
             showLoaderOnConfirm: true
-        }).then(function() {
+       */
+	//}).then(function() {
 
             document.getElementById('detector').play();
             $scope.$emit('notify', notify);
@@ -106,8 +109,8 @@ angular.module('nowCtrls', []).controller('NowCtrl', function($http, $scope, $wi
             }
         });
 
-    });
-
+   // });
+    }
 
 
 
