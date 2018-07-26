@@ -14,24 +14,24 @@ angular.module('nowApp', ['ngRoute', 'ngAnimate', 'angularNotify', 'oitozero.ngS
     }).when('/eat', {
         templateUrl: 'partials/byfoot/eat.html',
         controller: 'EatCtrl'
-		 }).when('/history', {
+    }).when('/history', {
         templateUrl: 'partials/history.html',
         controller: 'HistoryCtrl'
-		}).when('/delete_history', {
+    }).when('/delete_history', {
         templateUrl: 'partials/history.html',
         controller: 'DeleteCtrl'
-			}).when('/about', {
+    }).when('/about', {
         templateUrl: 'partials/about.html',
         controller: 'AboutCtrl'
-			}).when('/gas', {
+    }).when('/gas', {
         templateUrl: 'partials/gas.html',
         controller: 'GasCtrl'
-		
-	}).when('/details/:origin_lat/:origin_lng/:dest_lat/:dest_lng/:target', {
-        templateUrl:'partials/details.html',
-        controller:'DetailsCtrl'
 
- 
+    }).when('/details/:origin_lat/:origin_lng/:dest_lat/:dest_lng/:target', {
+        templateUrl: 'partials/details.html',
+        controller: 'DetailsCtrl'
+
+
 
 
     }).when('/drive', {
@@ -41,5 +41,7 @@ angular.module('nowApp', ['ngRoute', 'ngAnimate', 'angularNotify', 'oitozero.ngS
     }).when('/list', {
         templateUrl: 'partials/drive/carlist.html',
         controller: 'DriveCtrl'
-    }).otherwise({ redirectTo: '/' });
+    }).otherwise({
+        redirectTo: '/'
+    });
 }]);
